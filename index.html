@@ -1,0 +1,1890 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comunidad Cristiana Bethel - Registro & Control de Campamento</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        bethel: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#090a0f',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <!-- SheetJS (XLSX) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- QRCode.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- html2canvas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- HTML5-QRCode Scanner -->
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #090a0f;
+            color: #f8fafc;
+        }
+        h1, h2, h3, .font-heading {
+            font-family: 'Outfit', sans-serif;
+        }
+        
+        .glass-panel {
+            background: rgba(18, 22, 32, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card:hover {
+            border-color: rgba(255, 255, 255, 0.25);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .glass-input {
+            background: rgba(15, 20, 30, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+        }
+        .glass-input:focus {
+            border-color: #ffffff;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+            outline: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090a0f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            #printablePass, #printablePass * {
+                visibility: visible;
+            }
+            #printablePass {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                color: #000 !important;
+                background: #fff !important;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen text-slate-100 bg-[#090a0f] flex flex-col justify-between selection:bg-white selection:text-black">
+
+    <!-- Ambient Glow Effects -->
+    <div class="fixed top-0 left-1/3 w-[500px] h-[500px] bg-white/5 rounded-full blur-[160px] pointer-events-none -z-10"></div>
+    <div class="fixed bottom-10 right-10 w-96 h-96 bg-slate-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8">
+
+        <!-- HEADER / BRANDING BANNER -->
+        <header class="relative glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-8 overflow-hidden border border-white/10 shadow-2xl">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
+                
+                <!-- Logo & Title -->
+                <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
+                    <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-white text-black flex items-center justify-center p-2 shadow-2xl shrink-0 ring-4 ring-white/10">
+                        <svg viewBox="0 0 100 100" class="w-full h-full fill-current">
+                            <circle cx="50" cy="50" r="48" fill="#0f172a" />
+                            <path d="M 50 15 C 65 25 75 40 70 58 C 66 70 54 80 40 78 C 30 76 25 65 30 55 C 34 45 45 42 42 32 C 40 25 35 22 35 22 C 35 22 42 18 50 15 Z" fill="#ffffff"/>
+                            <circle cx="48" cy="46" r="3" fill="#0f172a"/>
+                        </svg>
+                    </div>
+
+                    <div class="space-y-1">
+                        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-slate-300 text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase">
+                            <i class="fa-solid fa-fire text-white animate-pulse"></i> Campamento Cristiano 2026
+                        </div>
+                        <h1 class="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white uppercase font-heading">
+                            COMUNIDAD CRISTIANA BETHEL
+                        </h1>
+                        <p class="text-slate-400 text-xs sm:text-sm font-medium tracking-wide">
+                            Sistema Institucional de Gestión de Pagos & Control de Asistencia QR
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Buttons (Mobile-optimized Grid) -->
+                <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2 w-full lg:w-auto">
+                    <button onclick="openScannerModal()" class="col-span-2 sm:col-span-1 bg-white hover:bg-slate-200 text-slate-950 font-bold px-4 py-3 sm:py-2.5 rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm active:scale-95 border border-white">
+                        <i class="fa-solid fa-qrcode text-base"></i>
+                        <span>Escanear QR</span>
+                    </button>
+
+                    <button onclick="openTribesModal()" class="glass-card hover:bg-white/10 text-white border border-white/20 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-campground text-amber-400"></i>
+                        <span>Tribus</span>
+                    </button>
+
+                    <button onclick="openDiscountsModal()" class="glass-card hover:bg-white/10 text-white border border-white/20 px-3.5 py-2.5 rounded-xl font-medium text-xs sm:text-sm transition-all flex items-center justify-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-tags text-slate-300"></i>
+                        <span>Descuentos</span>
+                    </button>
+
+                    <button onclick="exportToExcel()" class="glass-card hover:bg-white/10 text-slate-200 border border-white/20 px-3 py-2.5 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-2 active:scale-95">
+                        <i class="fa-solid fa-file-excel text-emerald-400"></i>
+                        <span>Excel</span>
+                    </button>
+
+                    <label class="glass-card hover:bg-white/10 text-slate-200 border border-white/20 px-3 py-2.5 rounded-xl font-medium text-xs transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-95">
+                        <i class="fa-solid fa-file-import text-sky-400"></i>
+                        <span>Importar</span>
+                        <input type="file" id="excelImporter" accept=".xlsx, .xls, .csv" class="hidden" onchange="importFromExcel(event)">
+                    </label>
+
+                    <button onclick="openRegisterModal()" class="col-span-2 sm:col-span-1 bg-slate-800 hover:bg-slate-700 text-white font-semibold px-4 py-3 sm:py-2.5 rounded-xl border border-white/20 transition-all flex items-center justify-center gap-2 text-xs sm:text-sm shadow-lg active:scale-95">
+                        <i class="fa-solid fa-user-plus text-slate-300"></i>
+                        <span>Nuevo Campista</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- DASHBOARD METRIC CARDS -->
+        <section class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
+            <!-- Card 1: Total -->
+            <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Total Inscritos</p>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mt-1" id="metricTotal">0</h3>
+                    </div>
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white shrink-0">
+                        <i class="fa-solid fa-users text-xs sm:text-sm"></i>
+                    </div>
+                </div>
+                <div class="mt-2 sm:mt-3 flex items-center text-[10px] sm:text-[11px] text-slate-400">
+                    <span id="metricCapacity" class="text-white font-bold mr-1">0%</span> meta
+                </div>
+            </div>
+
+            <!-- Card 2: Asistencia -->
+            <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Asistieron</p>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mt-1" id="metricAttended">0</h3>
+                    </div>
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-emerald-400 shrink-0">
+                        <i class="fa-solid fa-user-check text-xs sm:text-sm"></i>
+                    </div>
+                </div>
+                <div class="mt-2 sm:mt-3 text-[10px] sm:text-[11px] text-slate-400 truncate">
+                    Faltan: <strong id="metricPendingAttendance" class="text-slate-200">0</strong>
+                </div>
+            </div>
+
+            <!-- Card 3: Recaudado -->
+            <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Recaudado</p>
+                        <h3 class="text-lg sm:text-2xl font-black text-white mt-1" id="metricRecaudado">$0.00</h3>
+                    </div>
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-sky-400 shrink-0">
+                        <i class="fa-solid fa-sack-dollar text-xs sm:text-sm"></i>
+                    </div>
+                </div>
+                <div class="mt-2 sm:mt-3 text-[10px] sm:text-[11px] text-slate-400 truncate">
+                    Por cobrar: <strong id="metricPendiente" class="text-slate-300">$0.00</strong>
+                </div>
+            </div>
+
+            <!-- Card 4: Efectivo vs Transf -->
+            <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Métodos Pago</p>
+                        <div class="flex items-baseline gap-1 mt-1">
+                            <span class="text-sm sm:text-lg font-bold text-slate-200" id="metricEfectivo">$0</span>
+                            <span class="text-xs text-slate-500">/</span>
+                            <span class="text-sm sm:text-lg font-bold text-slate-200" id="metricTransferencia">$0</span>
+                        </div>
+                    </div>
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-slate-300 shrink-0">
+                        <i class="fa-solid fa-money-bill-transfer text-xs sm:text-sm"></i>
+                    </div>
+                </div>
+                <div class="mt-2 sm:mt-3 flex items-center justify-between text-[9px] sm:text-[10px] text-slate-400">
+                    <span><span id="countEfectivo">0</span> Efec.</span>
+                    <span><span id="countTransf">0</span> Trans.</span>
+                </div>
+            </div>
+
+            <!-- Card 5: Pagos Completos -->
+            <div class="col-span-2 lg:col-span-1 glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
+                <div class="flex justify-between items-start">
+                    <div>
+                        <p class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-widest">Pagos Completos</p>
+                        <h3 class="text-xl sm:text-2xl font-black text-white mt-1" id="statusCompletoCount">0</h3>
+                    </div>
+                    <div class="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-slate-300 shrink-0">
+                        <i class="fa-solid fa-pie-chart text-xs sm:text-sm"></i>
+                    </div>
+                </div>
+                <div class="mt-3 w-full bg-slate-900 rounded-full h-1.5 overflow-hidden flex border border-white/10">
+                    <div id="barCompleto" class="bg-white h-full" style="width: 0%"></div>
+                    <div id="barParcial" class="bg-slate-500 h-full" style="width: 0%"></div>
+                    <div id="barPendiente" class="bg-slate-700 h-full" style="width: 0%"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CHARTS SECTION -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <!-- Chart 1: Donut -->
+            <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-chart-pie text-white"></i> Resumen de Fondos
+                    </h3>
+                    <span class="text-[10px] text-slate-400 font-mono">Monto Total $</span>
+                </div>
+                <div class="relative w-full h-48 sm:h-56 flex items-center justify-center">
+                    <canvas id="paymentMethodsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart 2: Status -->
+            <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between">
+                <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
+                    <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-chart-bar text-white"></i> Estatus de Pagos
+                    </h3>
+                    <span class="text-[10px] text-slate-400 font-mono">Campistas</span>
+                </div>
+                <div class="relative w-full h-48 sm:h-56 flex items-center justify-center">
+                    <canvas id="paymentStatusChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- FILTERS BAR -->
+        <section class="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="relative w-full md:w-80">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                <input type="text" id="searchInput" oninput="applyFilters()" placeholder="Buscar por nombre, ID o teléfono..." 
+                    class="w-full pl-10 pr-4 py-2.5 rounded-xl glass-input text-xs text-white placeholder-slate-500 transition-all">
+            </div>
+
+            <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2 w-full md:w-auto justify-end">
+                <select id="filterTribe" onchange="applyFilters()" class="glass-input rounded-xl px-3 py-2 text-xs text-slate-200 bg-slate-900 cursor-pointer">
+                    <option value="">Todas las Tribus</option>
+                </select>
+
+                <select id="filterAttendance" onchange="applyFilters()" class="glass-input rounded-xl px-3 py-2 text-xs text-slate-200 bg-slate-900 cursor-pointer">
+                    <option value="">Asistencias</option>
+                    <option value="present">Presentes</option>
+                    <option value="absent">Pendientes</option>
+                </select>
+
+                <select id="filterChurch" onchange="applyFilters()" class="glass-input rounded-xl px-3 py-2 text-xs text-slate-200 bg-slate-900 cursor-pointer">
+                    <option value="">Todas las Iglesias</option>
+                </select>
+
+                <select id="filterStatus" onchange="applyFilters()" class="glass-input rounded-xl px-3 py-2 text-xs text-slate-200 bg-slate-900 cursor-pointer">
+                    <option value="">Estatus Pago</option>
+                    <option value="Completo">Pagado Completo</option>
+                    <option value="Anticipo">Anticipo / Parcial</option>
+                    <option value="Pendiente">Pendiente ($0)</option>
+                </select>
+
+                <button onclick="resetFilters()" class="p-2 rounded-xl glass-card hover:bg-white/10 text-slate-400 hover:text-white transition-all text-xs flex items-center justify-center" title="Limpiar Filtros">
+                    <i class="fa-solid fa-filter-circle-xmark text-sm"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- MAIN TABLE SECTION -->
+        <section class="glass-panel rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse min-w-[850px]">
+                    <thead>
+                        <tr class="bg-slate-950/80 text-slate-400 text-[10px] uppercase tracking-widest border-b border-white/10 font-bold">
+                            <th class="py-4 px-4">Asistencia</th>
+                            <th class="py-4 px-4">Folio ID</th>
+                            <th class="py-4 px-4">Campista</th>
+                            <th class="py-4 px-4">Tribu</th>
+                            <th class="py-4 px-4">Teléfono (WhatsApp)</th>
+                            <th class="py-4 px-4">Edad / Iglesia</th>
+                            <th class="py-4 px-4 min-w-[160px]">Pago</th>
+                            <th class="py-4 px-4 text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="campersTableBody" class="divide-y divide-white/5 text-xs">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Empty State -->
+            <div id="emptyState" class="hidden flex-col items-center justify-center p-12 text-center">
+                <div class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 mb-3">
+                    <i class="fa-solid fa-users-slash text-xl"></i>
+                </div>
+                <h4 class="text-sm font-bold text-slate-300">No se encontraron registros</h4>
+                <p class="text-xs text-slate-500 max-w-sm mt-1">No hay campistas que coincidan con la búsqueda o la lista está vacía.</p>
+                <button onclick="openRegisterModal()" class="mt-4 text-xs bg-white text-black font-bold px-4 py-2 rounded-xl transition-all hover:bg-slate-200">
+                    Registrar Primer Campista
+                </button>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- MODAL: GESTIÓN COMPLETA DE TRIBUS -->
+    <div id="tribesModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl border border-white/15 shadow-2xl p-5 sm:p-6 relative space-y-5 my-6 max-h-[90vh] flex flex-col justify-between">
+            <div>
+                <button onclick="closeTribesModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+
+                <div class="flex items-center gap-3 border-b border-white/10 pb-4">
+                    <div class="w-11 h-11 rounded-2xl bg-amber-500/20 border border-amber-500/30 flex items-center justify-center text-amber-400">
+                        <i class="fa-solid fa-campground text-xl"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-extrabold text-white font-heading">Gestión y Creación de Tribus</h3>
+                        <p class="text-xs text-slate-400">Crea los equipos y asigna a los campistas manualmente</p>
+                    </div>
+                </div>
+
+                <!-- Formulario Agregar / Editar Tribu -->
+                <form onsubmit="saveTribe(event)" class="mt-4 p-4 bg-slate-900/90 rounded-2xl border border-white/10 space-y-3">
+                    <input type="hidden" id="tribeEditId" value="">
+                    <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-plus-circle text-amber-400"></i> <span id="tribeFormTitle">Crear Nueva Tribu</span>
+                    </h4>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-[11px] font-medium text-slate-300 mb-1">Nombre de la Tribu *</label>
+                            <input type="text" id="tribeName" required placeholder="Ej. Judá, Leones" class="w-full glass-input rounded-xl px-3 py-1.5 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-medium text-slate-300 mb-1">Color Distintivo *</label>
+                            <div class="flex gap-2 items-center">
+                                <input type="color" id="tribeColor" value="#f59e0b" class="h-8 w-12 rounded-lg cursor-pointer bg-transparent border border-white/20 p-0.5">
+                                <span class="text-[10px] text-slate-400 font-mono" id="tribeColorHex">#f59e0b</span>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-medium text-slate-300 mb-1">Edad Sugerida</label>
+                            <input type="text" id="tribeAgeRange" placeholder="Ej. 12-17 años" class="w-full glass-input rounded-xl px-3 py-1.5 text-xs">
+                        </div>
+                    </div>
+
+                    <div class="flex justify-end gap-2 pt-1">
+                        <button type="button" onclick="cancelTribeEdit()" id="btnCancelTribe" class="hidden px-3 py-1.5 rounded-xl glass-card text-xs text-slate-300">
+                            Cancelar
+                        </button>
+                        <button type="submit" class="px-4 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs shadow-lg transition-all">
+                            Guardar Tribu
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Lista de Tribus Existentes -->
+                <div class="mt-4 space-y-2 overflow-y-auto max-h-[300px] pr-1">
+                    <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tribus Registradas</h4>
+                    <div id="tribesList" class="space-y-2">
+                        <!-- Dynamic Tribes List -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-3 border-t border-white/10">
+                <button onclick="closeTribesModal()" class="px-5 py-2 rounded-xl bg-white text-black font-bold text-xs shadow-lg hover:bg-slate-200">
+                    Listo / Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ESCÁNER QR DE ASISTENCIA -->
+    <div id="scannerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-panel w-full max-w-lg rounded-3xl border border-white/15 shadow-2xl p-6 relative space-y-4">
+            <button onclick="closeScannerModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center gap-3 border-b border-white/10 pb-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
+                    <i class="fa-solid fa-qrcode text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-white font-heading">Escáner de Asistencia QR</h3>
+                    <p class="text-xs text-slate-400">Apunta la cámara al pase digital o escribe el Folio</p>
+                </div>
+            </div>
+
+            <div class="relative bg-black rounded-2xl overflow-hidden border border-white/10 min-h-[240px] flex items-center justify-center">
+                <div id="reader" class="w-full"></div>
+            </div>
+
+            <form onsubmit="manualCheckIn(event)" class="pt-2 space-y-3">
+                <label class="block text-xs font-medium text-slate-300">Ingresar Folio ID manualmente:</label>
+                <div class="flex gap-2">
+                    <input type="text" id="manualScanId" placeholder="Ej. CAMP-01" class="w-full glass-input rounded-xl px-3 py-2 text-xs font-mono font-bold text-white uppercase">
+                    <button type="submit" class="px-5 py-2 rounded-xl bg-white text-black text-xs font-bold shadow-lg hover:bg-slate-200 whitespace-nowrap">
+                        Marcar Entrada
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: PASE DIGITAL IMPRIMIBLE Y ENVÍO A WHATSAPP -->
+    <div id="passModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="glass-panel w-full max-w-md rounded-3xl border border-white/15 shadow-2xl p-5 sm:p-6 relative space-y-4 my-6">
+            <button onclick="closePassModal()" class="no-print absolute right-4 top-4 text-slate-400 hover:text-white z-20">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <!-- TICKET PASE DIGITAL SIMPLIFICADO -->
+            <div id="printablePass" class="bg-[#0f1420] text-slate-100 p-6 rounded-2xl space-y-4 border border-slate-700/80 shadow-2xl">
+                
+                <div class="flex justify-between items-center gap-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-full bg-white text-black p-1 flex items-center justify-center shrink-0">
+                            <svg viewBox="0 0 100 100" class="w-full h-full fill-current">
+                                <circle cx="50" cy="50" r="48" fill="#0f172a" />
+                                <path d="M 50 15 C 65 25 75 40 70 58 C 66 70 54 80 40 78 C 30 76 25 65 30 55 C 34 45 45 42 42 32 C 40 25 35 22 35 22 C 35 22 42 18 50 15 Z" fill="#ffffff"/>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="text-[9px] font-black text-slate-400 uppercase tracking-widest">COMUNIDAD CRISTIANA BETHEL</div>
+                            <h2 class="text-xl font-extrabold text-white leading-tight font-heading">Pase Digital Campamento</h2>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="w-full h-px bg-slate-800"></div>
+
+                <div class="grid grid-cols-2 gap-y-3 gap-x-3 text-xs">
+                    <div class="col-span-2">
+                        <span class="text-slate-400 block text-[9px] uppercase font-bold tracking-wider">FOLIO ID</span>
+                        <strong id="passId" class="text-white font-mono text-lg font-bold">CAMP-01</strong>
+                    </div>
+
+                    <div class="col-span-2">
+                        <span class="text-slate-400 block text-[9px] uppercase font-bold tracking-wider">NOMBRE DEL CAMPISTA</span>
+                        <strong id="passName" class="text-base font-black text-white uppercase tracking-wide">BRENDA RAMIREZ</strong>
+                    </div>
+
+                    <div>
+                        <span class="text-slate-400 block text-[9px] uppercase font-bold tracking-wider">TELÉFONO</span>
+                        <span id="passPhone" class="text-slate-200 font-bold text-xs">56 64 02 93 33</span>
+                    </div>
+
+                    <div>
+                        <span class="text-slate-400 block text-[9px] uppercase font-bold tracking-wider">CONTACTO EMERGENCIA</span>
+                        <span id="passEmergency" class="text-slate-200 font-bold uppercase text-xs">PAPÁ - 735 190 2859</span>
+                    </div>
+                </div>
+
+                <div class="pt-2 flex flex-col items-center justify-center text-center">
+                    <div class="p-3 bg-white rounded-2xl shadow-xl inline-block">
+                        <div id="qrcodeCanvas"></div>
+                    </div>
+                    <p class="text-[9px] text-slate-400 mt-2">Presenta este pase impreso o digital al ingresar al campamento.</p>
+                </div>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN PARA WHATSAPP / IMPRESIÓN -->
+            <div class="no-print pt-2 flex flex-col gap-2">
+                <button id="btnSendWaPass" onclick="sendPassToWhatsApp()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
+                    <i class="fa-brands fa-whatsapp text-lg"></i> Enviar Pase Directo por WhatsApp
+                </button>
+
+                <div class="flex items-center justify-end gap-2">
+                    <button onclick="closePassModal()" class="px-4 py-2 rounded-xl glass-card text-xs text-slate-300">Cerrar</button>
+                    <button onclick="downloadPassAsImage()" class="px-4 py-2 rounded-xl bg-white text-black font-bold text-xs shadow-lg hover:bg-slate-200 flex items-center gap-1.5">
+                        <i class="fa-solid fa-download"></i> Imagen PNG
+                    </button>
+                    <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-800 border border-white/20 text-white font-bold text-xs hover:bg-slate-700 flex items-center gap-1.5">
+                        <i class="fa-solid fa-print"></i> PDF
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: REGISTRO / EDICIÓN -->
+    <div id="camperModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
+        <div class="glass-panel w-full max-w-2xl rounded-3xl border border-white/15 shadow-2xl overflow-hidden my-6 transform transition-all">
+            
+            <div class="bg-slate-900 px-6 py-4 border-b border-white/10 flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-tent text-base"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-base font-bold text-white font-heading" id="modalTitle">Nuevo Registro de Campista</h3>
+                        <p class="text-xs text-slate-400">Completa la ficha de inscripción oficial</p>
+                    </div>
+                </div>
+                <button onclick="closeRegisterModal()" class="w-7 h-7 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-all">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <form id="camperForm" onsubmit="saveCamper(event)" class="p-5 sm:p-6 space-y-4 text-xs">
+                <input type="hidden" id="camperIndex" value="-1">
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block font-medium text-slate-300 mb-1">Folio ID (Auto)</label>
+                        <input type="text" id="regId" readonly class="w-full glass-input rounded-xl px-3 py-2 text-xs text-white font-mono font-bold bg-slate-900 cursor-not-allowed">
+                    </div>
+                    <div class="sm:col-span-2">
+                        <label class="block font-medium text-slate-300 mb-1">Nombre Completo del Campista *</label>
+                        <input type="text" id="regFullName" required placeholder="Ej. Brenda Ramírez" class="w-full glass-input rounded-xl px-3 py-2">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block font-medium text-slate-300 mb-1">Teléfono / WhatsApp *</label>
+                        <input type="tel" id="regPhone" required placeholder="Ej. 5664029333" class="w-full glass-input rounded-xl px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-300 mb-1">Edad *</label>
+                        <input type="number" id="regAge" min="3" max="99" required placeholder="Ej. 17" class="w-full glass-input rounded-xl px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-amber-300 mb-1">Tribu / Equipo</label>
+                        <select id="regTribe" class="w-full glass-input rounded-xl px-3 py-2 bg-slate-900 text-white font-bold">
+                            <option value="">Sin Asignar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium text-slate-300 mb-1">Iglesia / Congregación *</label>
+                        <input type="text" id="regChurch" required placeholder="Ej. Bethel Cuautla" class="w-full glass-input rounded-xl px-3 py-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium text-slate-300 mb-1">Contacto Emergencia (Nombre y Tel) *</label>
+                        <input type="text" id="regEmergencyContact" required placeholder="Ej. Papá - 735 190 2859" class="w-full glass-input rounded-xl px-3 py-2">
+                    </div>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-900/80 border border-white/10 space-y-3">
+                    <div class="flex justify-between items-center">
+                        <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-receipt"></i> Datos Financieros y Pagos
+                        </h4>
+                        <span id="discountAppliedTag" class="hidden px-2 py-0.5 rounded bg-white/10 text-white border border-white/20 text-[10px] font-bold">
+                            Descuento Aplicado
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-slate-400 mb-1">Costo Total (\$)</label>
+                            <input type="number" id="regTotalCost" value="1500" min="0" oninput="calculateBalance()" class="w-full glass-input rounded-xl px-3 py-1.5 font-semibold">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">Monto Abonado (\$)</label>
+                            <input type="number" id="regPaidAmount" value="500" min="0" oninput="calculateBalance()" class="w-full glass-input rounded-xl px-3 py-1.5 font-semibold text-white">
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">Saldo Restante</label>
+                            <input type="text" id="regPendingAmount" readonly value="$1000.00" class="w-full glass-input rounded-xl px-3 py-1.5 font-bold text-slate-300 bg-slate-900 cursor-not-allowed">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                        <div>
+                            <label class="block text-slate-400 mb-1">Método de Pago</label>
+                            <select id="regPaymentMethod" class="w-full glass-input rounded-xl px-3 py-1.5 bg-slate-900">
+                                <option value="Efectivo">Efectivo</option>
+                                <option value="Transferencia">Transferencia Bancaria</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-slate-400 mb-1">Fecha de Registro / Pago</label>
+                            <input type="date" id="regPaymentDate" required onchange="checkAutomaticDiscountRule()" class="w-full glass-input rounded-xl px-3 py-1.5">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Notas Médicas / Observaciones</label>
+                    <textarea id="regMedicalNotes" rows="2" placeholder="Ej. Alergias, dieta especial, medicamentos..." class="w-full glass-input rounded-xl p-3 resize-none"></textarea>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
+                    <button type="button" onclick="closeRegisterModal()" class="px-4 py-2 rounded-xl glass-card text-slate-300 text-xs font-medium">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="px-6 py-2 rounded-xl bg-white hover:bg-slate-200 text-black text-xs font-bold shadow-lg transition-all">
+                        Guardar Campista
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: REGLAS DE DESCUENTO -->
+    <div id="discountsModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
+        <div class="glass-panel w-full max-w-xl rounded-3xl border border-white/15 shadow-2xl p-6 space-y-5 relative">
+            <button onclick="closeDiscountsModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div class="flex items-center gap-3 border-b border-white/10 pb-3">
+                <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
+                    <i class="fa-solid fa-tags text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-base font-bold text-white font-heading">Configuración de Descuentos</h3>
+                    <p class="text-xs text-slate-400">Condiciones de Pronto Pago</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-xs">
+                <div class="flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-white/10">
+                    <div>
+                        <span class="font-bold text-white block">Activar Regla de Pronto Pago</span>
+                        <span class="text-slate-400 text-[11px]">Aplica tarifa especial antes de una fecha límite.</span>
+                    </div>
+                    <label class="relative inline-flex items-center cursor-pointer">
+                        <input type="checkbox" id="ruleActiveToggle" onchange="toggleRuleState()" class="sr-only peer">
+                        <div class="w-11 h-6 bg-slate-800 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-white"></div>
+                    </label>
+                </div>
+
+                <div id="ruleConfigFields" class="space-y-3 opacity-50 pointer-events-none transition-all">
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-medium">Fecha Límite Descuento</label>
+                            <input type="date" id="ruleEndDate" value="2026-05-31" class="w-full glass-input rounded-xl px-3 py-2 text-xs">
+                        </div>
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-medium">Precio Con Descuento (\$)</label>
+                            <input type="number" id="ruleDiscountPrice" value="1200" class="w-full glass-input rounded-xl px-3 py-2 text-xs font-bold text-white">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-slate-300 mb-1 font-medium">Precio Regular Estándar (\$)</label>
+                            <input type="number" id="ruleRegularPrice" value="1500" class="w-full glass-input rounded-xl px-3 py-2 text-xs">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2 border-t border-white/10">
+                <button onclick="closeDiscountsModal()" class="px-4 py-2 rounded-xl glass-card text-xs text-slate-300">Cerrar</button>
+                <button onclick="saveDiscountSettings()" class="px-5 py-2 rounded-xl bg-white text-black font-bold text-xs shadow-lg hover:bg-slate-200">
+                    Guardar Cambios
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: ABONO RÁPIDO -->
+    <div id="paymentModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-panel w-full max-w-md rounded-3xl border border-white/15 shadow-2xl p-6 space-y-4">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
+                <h3 class="text-sm font-bold text-white flex items-center gap-2 font-heading">
+                    <i class="fa-solid fa-hand-holding-dollar text-white"></i> Registrar Abono de Pago
+                </h3>
+                <button onclick="closePaymentModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <input type="hidden" id="payCamperIndex">
+            
+            <div class="space-y-3 text-xs">
+                <div class="p-3 rounded-xl bg-slate-900 border border-white/10 space-y-1">
+                    <p class="text-slate-400">Campista: <strong id="payCamperName" class="text-white">...</strong></p>
+                    <p class="text-slate-400">Saldo abonado: <span id="payCurrentPaid" class="text-white font-semibold">$0.00</span></p>
+                    <p class="text-slate-400">Restante por pagar: <span id="payCurrentPending" class="text-slate-300 font-semibold">$0.00</span></p>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Monto a Abonar (\$)</label>
+                    <input type="number" id="payAddAmount" min="1" step="10" placeholder="0.00" class="w-full glass-input rounded-xl px-3 py-2 text-base font-bold text-white">
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Método de este Abono</label>
+                    <select id="payAddMethod" class="w-full glass-input rounded-xl px-3 py-2 bg-slate-900">
+                        <option value="Efectivo">Efectivo</option>
+                        <option value="Transferencia">Transferencia Bancaria</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-2">
+                <button onclick="closePaymentModal()" class="px-4 py-2 rounded-xl glass-card text-xs text-slate-300">Cancelar</button>
+                <button onclick="submitAddPayment()" class="px-5 py-2 rounded-xl bg-white text-black font-bold text-xs shadow-lg hover:bg-slate-200">
+                    Confirmar Abono
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER INSTITUCIONAL -->
+    <footer class="mt-12 text-center text-xs text-slate-500 py-6 border-t border-white/5">
+        <p>© 2026 Comunidad Cristiana Bethel • Sistema Institucional de Control de Asistencia y Gestión de Campamentos</p>
+    </footer>
+
+    <!-- TOAST CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        const STORAGE_KEY = 'CAMP_BETHEL_2026_REGISTERS_V6';
+        const RULES_KEY = 'CAMP_BETHEL_DISCOUNT_RULES_2026';
+        const TRIBES_KEY = 'CAMP_BETHEL_TRIBES_2026';
+
+        // Demo Data con Folios en formato CAMP-01, CAMP-02
+        const initialDemoData = [
+            {
+                id: 'CAMP-01',
+                fullName: 'BRENDA RAMIREZ',
+                phone: '56 64 02 93 33',
+                age: 18,
+                tribeId: 'tribe-1',
+                church: 'BETHEL CUAUTLA',
+                emergencyContact: 'PAPÁ - 735 190 2859',
+                totalCost: 600,
+                paidAmount: 200,
+                paymentMethod: 'Efectivo',
+                paymentDate: '2026-10-15',
+                medicalNotes: 'Ninguna',
+                attended: false,
+                checkInTime: null
+            },
+            {
+                id: 'CAMP-02',
+                fullName: 'MATEO GONZÁLEZ LÓPEZ',
+                phone: '55 87 65 43 21',
+                age: 14,
+                tribeId: 'tribe-2',
+                church: 'IGLESIA FILADELFIA',
+                emergencyContact: 'MAMÁ - 55 1122 3344',
+                totalCost: 1500,
+                paidAmount: 1500,
+                paymentMethod: 'Transferencia',
+                paymentDate: '2026-10-10',
+                medicalNotes: 'Ninguna',
+                attended: true,
+                checkInTime: '2026-10-15 08:30:12'
+            }
+        ];
+
+        let initialTribes = [
+            { id: 'tribe-1', name: 'Judá', color: '#3b82f6', ageRange: '15-18 años' },
+            { id: 'tribe-2', name: 'Leones', color: '#f59e0b', ageRange: '12-14 años' }
+        ];
+
+        let campers = [];
+        let tribes = [];
+        let activePassCamper = null;
+
+        let discountRule = {
+            active: false,
+            endDate: '2026-05-31',
+            discountPrice: 1200,
+            regularPrice: 1500
+        };
+
+        let chartMethodsInstance = null;
+        let chartStatusInstance = null;
+        let html5QrScanner = null;
+
+        // INITIALIZATION
+        window.addEventListener('DOMContentLoaded', () => {
+            loadTribesFromStorage();
+            loadCampersFromStorage();
+            loadDiscountRules();
+            populateChurchFilter();
+            populateTribeFilters();
+            renderDashboard();
+            initOrUpdateCharts();
+            renderTable();
+            
+            document.getElementById('regPaymentDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('tribeColor').addEventListener('input', (e) => {
+                document.getElementById('tribeColorHex').textContent = e.target.value;
+            });
+        });
+
+        function loadTribesFromStorage() {
+            const stored = localStorage.getItem(TRIBES_KEY);
+            if (stored) {
+                try { tribes = JSON.parse(stored); } catch(e) { tribes = [...initialTribes]; }
+            } else {
+                tribes = [...initialTribes];
+                saveTribesToStorage();
+            }
+        }
+
+        function saveTribesToStorage() {
+            localStorage.setItem(TRIBES_KEY, JSON.stringify(tribes));
+        }
+
+        function loadCampersFromStorage() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                try { campers = JSON.parse(stored); } catch(e) { campers = [...initialDemoData]; }
+            } else {
+                campers = [...initialDemoData];
+                saveToStorage();
+            }
+        }
+
+        function saveToStorage() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(campers));
+        }
+
+        function loadDiscountRules() {
+            const stored = localStorage.getItem(RULES_KEY);
+            if (stored) {
+                try { discountRule = JSON.parse(stored); } catch(e) {}
+            }
+            document.getElementById('ruleActiveToggle').checked = discountRule.active;
+            document.getElementById('ruleEndDate').value = discountRule.endDate;
+            document.getElementById('ruleDiscountPrice').value = discountRule.discountPrice;
+            document.getElementById('ruleRegularPrice').value = discountRule.regularPrice;
+            toggleRuleState();
+        }
+
+        function calculateBalance() {
+            const total = parseFloat(document.getElementById('regTotalCost').value) || 0;
+            const paid = parseFloat(document.getElementById('regPaidAmount').value) || 0;
+            const pending = Math.max(0, total - paid);
+            document.getElementById('regPendingAmount').value = `$${pending.toFixed(2)}`;
+        }
+
+        // GENERACIÓN DE FOLIO CONSECUTIVO DESDE EL 01 EN ADELANTE (CAMP-01, CAMP-02)
+        function generateUniqueId() {
+            let nextNum = 1;
+            if (campers.length > 0) {
+                const nums = campers.map(c => {
+                    const match = c.id.match(/CAMP-(\d+)/i);
+                    return match ? parseInt(match[1]) : 0;
+                });
+                const maxNum = Math.max(...nums, 0);
+                nextNum = maxNum + 1;
+            }
+            const padded = String(nextNum).padStart(2, '0');
+            return `CAMP-${padded}`;
+        }
+
+        // REDIRECCIÓN DIRECTA A WHATSAPP
+        function openWhatsApp(phoneDigits, fullName) {
+            const cleanPhone = phoneDigits.replace(/\D/g, '');
+            if (!cleanPhone) {
+                showToast('Número de teléfono no disponible', 'error');
+                return;
+            }
+            const message = encodeURIComponent(`Hola ${fullName}, te saludamos de Comunidad Cristiana Bethel referente a tu registro para el Campamento 2026.`);
+            const waUrl = `https://api.whatsapp.com/send?phone=52${cleanPhone}&text=${message}`;
+            window.open(waUrl, '_blank');
+        }
+
+        // GESTIÓN DE TRIBUS
+        function openTribesModal() {
+            renderTribesList();
+            document.getElementById('tribesModal').classList.remove('hidden');
+        }
+
+        function closeTribesModal() {
+            document.getElementById('tribesModal').classList.add('hidden');
+            cancelTribeEdit();
+        }
+
+        function renderTribesList() {
+            const container = document.getElementById('tribesList');
+            container.innerHTML = '';
+
+            if (tribes.length === 0) {
+                container.innerHTML = '<p class="text-xs text-slate-500 italic text-center py-4">No hay tribus creadas aún.</p>';
+                return;
+            }
+
+            tribes.forEach((t) => {
+                const memberCount = campers.filter(c => c.tribeId === t.id).length;
+                const div = document.createElement('div');
+                div.className = "flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-white/10 text-xs";
+                div.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-4 h-4 rounded-full border border-white/30 shrink-0" style="background-color: ${t.color}"></div>
+                        <div>
+                            <span class="font-bold text-white text-sm block">${t.name}</span>
+                            <span class="text-[10px] text-slate-400">${t.ageRange || 'Sin rango de edad'} • <strong>${memberCount}</strong> campista(s)</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1">
+                        <button onclick="editTribe('${t.id}')" class="p-1.5 rounded-lg glass-card hover:bg-white/10 text-slate-300"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteTribe('${t.id}')" class="p-1.5 rounded-lg bg-rose-950/30 text-rose-300 hover:bg-rose-900/40"><i class="fa-solid fa-trash"></i></button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function saveTribe(e) {
+            e.preventDefault();
+            const editId = document.getElementById('tribeEditId').value;
+            const name = document.getElementById('tribeName').value.trim();
+            const color = document.getElementById('tribeColor').value;
+            const ageRange = document.getElementById('tribeAgeRange').value.trim();
+
+            if (editId) {
+                const idx = tribes.findIndex(t => t.id === editId);
+                if (idx >= 0) {
+                    tribes[idx] = { id: editId, name, color, ageRange };
+                    showToast('Tribu actualizada', 'success');
+                }
+            } else {
+                const newTribe = {
+                    id: 'tribe-' + Date.now(),
+                    name,
+                    color,
+                    ageRange
+                };
+                tribes.push(newTribe);
+                showToast('Tribu creada con éxito', 'success');
+            }
+
+            saveTribesToStorage();
+            populateTribeFilters();
+            renderTribesList();
+            renderTable();
+            cancelTribeEdit();
+        }
+
+        function editTribe(tribeId) {
+            const t = tribes.find(item => item.id === tribeId);
+            if (!t) return;
+
+            document.getElementById('tribeEditId').value = t.id;
+            document.getElementById('tribeName').value = t.name;
+            document.getElementById('tribeColor').value = t.color;
+            document.getElementById('tribeColorHex').textContent = t.color;
+            document.getElementById('tribeAgeRange').value = t.ageRange || '';
+
+            document.getElementById('tribeFormTitle').textContent = 'Editar Tribu';
+            document.getElementById('btnCancelTribe').classList.remove('hidden');
+        }
+
+        function cancelTribeEdit() {
+            document.getElementById('tribeEditId').value = '';
+            document.getElementById('tribeName').value = '';
+            document.getElementById('tribeColor').value = '#f59e0b';
+            document.getElementById('tribeColorHex').textContent = '#f59e0b';
+            document.getElementById('tribeAgeRange').value = '';
+
+            document.getElementById('tribeFormTitle').textContent = 'Crear Nueva Tribu';
+            document.getElementById('btnCancelTribe').classList.add('hidden');
+        }
+
+        function deleteTribe(tribeId) {
+            if (confirm('¿Eliminar esta tribu? Los campistas asignados quedarán "Sin Asignar".')) {
+                tribes = tribes.filter(t => t.id !== tribeId);
+                campers.forEach(c => {
+                    if (c.tribeId === tribeId) c.tribeId = '';
+                });
+                saveTribesToStorage();
+                saveToStorage();
+                populateTribeFilters();
+                renderTribesList();
+                renderTable();
+                showToast('Tribu eliminada', 'info');
+            }
+        }
+
+        function assignTribeToCamper(camperIndex, tribeId) {
+            if (campers[camperIndex]) {
+                campers[camperIndex].tribeId = tribeId;
+                saveToStorage();
+                renderTable();
+                showToast(`Tribu actualizada para ${campers[camperIndex].fullName}`, 'success');
+            }
+        }
+
+        function populateTribeFilters() {
+            // Table Filter
+            const selectFilter = document.getElementById('filterTribe');
+            const currentFilter = selectFilter.value;
+            selectFilter.innerHTML = '<option value="">Todas las Tribus</option>';
+            tribes.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = t.name;
+                selectFilter.appendChild(opt);
+            });
+            selectFilter.value = currentFilter;
+
+            // Form Select
+            const selectForm = document.getElementById('regTribe');
+            const currentFormVal = selectForm.value;
+            selectForm.innerHTML = '<option value="">Sin Asignar</option>';
+            tribes.forEach(t => {
+                const opt = document.createElement('option');
+                opt.value = t.id;
+                opt.textContent = t.name;
+                selectForm.appendChild(opt);
+            });
+            selectForm.value = currentFormVal;
+        }
+
+        // DASHBOARD CALCULATIONS
+        function renderDashboard() {
+            const total = campers.length;
+            const totalRecaudado = campers.reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            const totalCosto = campers.reduce((sum, c) => sum + (parseFloat(c.totalCost) || 0), 0);
+            const totalPendiente = Math.max(0, totalCosto - totalRecaudado);
+
+            const attendedCount = campers.filter(c => c.attended).length;
+            const pendingAttendanceCount = total - attendedCount;
+
+            const efectivoVal = campers.filter(c => c.paymentMethod === 'Efectivo').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            const transfVal = campers.filter(c => c.paymentMethod === 'Transferencia').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+
+            const countEfec = campers.filter(c => c.paymentMethod === 'Efectivo').length;
+            const countTrans = campers.filter(c => c.paymentMethod === 'Transferencia').length;
+
+            let completoCount = 0, parcialCount = 0, pendienteCount = 0;
+
+            campers.forEach(c => {
+                const paid = parseFloat(c.paidAmount) || 0;
+                const cost = parseFloat(c.totalCost) || 0;
+                if (paid >= cost && cost > 0) completoCount++;
+                else if (paid > 0) parcialCount++;
+                else pendienteCount++;
+            });
+
+            document.getElementById('metricTotal').textContent = total;
+            document.getElementById('metricAttended').textContent = attendedCount;
+            document.getElementById('metricPendingAttendance').textContent = pendingAttendanceCount;
+
+            document.getElementById('metricRecaudado').textContent = `$${totalRecaudado.toLocaleString('es-MX', {minimumFractionDigits: 2})}`;
+            document.getElementById('metricPendiente').textContent = `$${totalPendiente.toLocaleString('es-MX', {minimumFractionDigits: 2})}`;
+            
+            document.getElementById('metricEfectivo').textContent = `$${efectivoVal.toLocaleString('es-MX')}`;
+            document.getElementById('metricTransferencia').textContent = `$${transfVal.toLocaleString('es-MX')}`;
+            document.getElementById('countEfectivo').textContent = countEfec;
+            document.getElementById('countTransf').textContent = countTrans;
+
+            document.getElementById('statusCompletoCount').textContent = completoCount;
+
+            const target = 100;
+            const pct = Math.min(100, Math.round((total / target) * 100));
+            document.getElementById('metricCapacity').textContent = `${pct}%`;
+
+            const totalSafe = total || 1;
+            document.getElementById('barCompleto').style.width = `${(completoCount / totalSafe) * 100}%`;
+            document.getElementById('barParcial').style.width = `${(parcialCount / totalSafe) * 100}%`;
+            document.getElementById('barPendiente').style.width = `${(pendienteCount / totalSafe) * 100}%`;
+        }
+
+        // CHARTS
+        function initOrUpdateCharts() {
+            const efectivoVal = campers.filter(c => c.paymentMethod === 'Efectivo').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            const transfVal = campers.filter(c => c.paymentMethod === 'Transferencia').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            
+            const totalCosto = campers.reduce((sum, c) => sum + (parseFloat(c.totalCost) || 0), 0);
+            const totalRecaudado = efectivoVal + transfVal;
+            const totalPendiente = Math.max(0, totalCosto - totalRecaudado);
+
+            let completoCount = 0, parcialCount = 0, pendienteCount = 0;
+            campers.forEach(c => {
+                const paid = parseFloat(c.paidAmount) || 0;
+                const cost = parseFloat(c.totalCost) || 0;
+                if (paid >= cost && cost > 0) completoCount++;
+                else if (paid > 0) parcialCount++;
+                else pendienteCount++;
+            });
+
+            // Donut Chart
+            const ctx1 = document.getElementById('paymentMethodsChart').getContext('2d');
+            if (chartMethodsInstance) {
+                chartMethodsInstance.data.datasets[0].data = [efectivoVal, transfVal, totalPendiente];
+                chartMethodsInstance.update();
+            } else {
+                chartMethodsInstance = new Chart(ctx1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Efectivo', 'Transferencia', 'Saldo Pendiente'],
+                        datasets: [{
+                            data: [efectivoVal, transfVal, totalPendiente],
+                            backgroundColor: ['#ffffff', '#94a3b8', '#334155'],
+                            borderColor: '#090a0f',
+                            borderWidth: 3,
+                            hoverOffset: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { family: 'Inter', size: 10 } } }
+                        },
+                        cutout: '68%'
+                    }
+                });
+            }
+
+            // Status Chart
+            const ctx2 = document.getElementById('paymentStatusChart').getContext('2d');
+            if (chartStatusInstance) {
+                chartStatusInstance.data.datasets[0].data = [completoCount, parcialCount, pendienteCount];
+                chartStatusInstance.update();
+            } else {
+                chartStatusInstance = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Completo', 'Parcial', 'Pendiente (\$0)'],
+                        datasets: [{
+                            label: 'Campistas',
+                            data: [completoCount, parcialCount, pendienteCount],
+                            backgroundColor: ['#ffffff', '#64748b', '#334155'],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255, 255, 255, 0.05)' } },
+                            y: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        }
+
+        function populateChurchFilter() {
+            const select = document.getElementById('filterChurch');
+            const current = select.value;
+            const churches = [...new Set(campers.map(c => c.church.trim()).filter(Boolean))].sort();
+
+            select.innerHTML = '<option value="">Todas las Iglesias</option>';
+            churches.forEach(ch => {
+                const opt = document.createElement('option');
+                opt.value = ch;
+                opt.textContent = ch;
+                select.appendChild(opt);
+            });
+            select.value = current;
+        }
+
+        // RENDER TABLE
+        function renderTable(dataToRender = null) {
+            const tbody = document.getElementById('campersTableBody');
+            const emptyState = document.getElementById('emptyState');
+            tbody.innerHTML = '';
+
+            const list = dataToRender || getFilteredCampers();
+
+            if (list.length === 0) {
+                emptyState.classList.remove('hidden');
+                emptyState.classList.add('flex');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+                emptyState.classList.remove('flex');
+            }
+
+            list.forEach((camper) => {
+                const realIndex = campers.findIndex(c => c.id === camper.id);
+                const paid = parseFloat(camper.paidAmount) || 0;
+                const cost = parseFloat(camper.totalCost) || 0;
+                const pct = cost > 0 ? Math.min(100, Math.round((paid / cost) * 100)) : 0;
+
+                const assignedTribe = tribes.find(t => t.id === camper.tribeId);
+                
+                // Selector rápido de tribu en tabla
+                let tribeDropdown = `<select onchange="assignTribeToCamper(${realIndex}, this.value)" class="glass-input rounded-lg px-2 py-1 text-[11px] bg-slate-900 border-white/10 text-white font-medium cursor-pointer">
+                    <option value="">+ Asignar</option>`;
+                tribes.forEach(t => {
+                    const sel = t.id === camper.tribeId ? 'selected' : '';
+                    tribeDropdown += `<option value="${t.id}" ${sel}>${t.name}</option>`;
+                });
+                tribeDropdown += `</select>`;
+
+                const attendanceToggle = camper.attended ? 
+                    `<button onclick="toggleAttendance(${realIndex})" class="px-2.5 py-1 rounded-xl bg-white/10 text-white border border-white/30 text-[10px] font-bold flex items-center gap-1 hover:bg-white/20 transition-all">
+                        <i class="fa-solid fa-square-check text-sm text-emerald-400"></i> PRESENTES
+                    </button>` :
+                    `<button onclick="toggleAttendance(${realIndex})" class="px-2.5 py-1 rounded-xl bg-slate-900 text-slate-400 border border-slate-800 text-[10px] font-medium flex items-center gap-1 hover:bg-white/10 hover:text-white transition-all">
+                        <i class="fa-regular fa-square text-sm"></i> PENDIENTE
+                    </button>`;
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-white/[0.02] transition-colors group border-b border-white/5";
+                tr.innerHTML = `
+                    <td class="py-3 px-4">
+                        ${attendanceToggle}
+                        ${camper.checkInTime ? `<div class="text-[9px] text-slate-500 mt-1 font-mono">\${camper.checkInTime.split(' ')[1] || camper.checkInTime}</div>` : ''}
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-mono text-xs font-bold text-slate-200">${camper.id}</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="font-bold text-white uppercase group-hover:text-slate-200 transition-colors">${camper.fullName}</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="flex items-center gap-1.5">
+                            ${assignedTribe ? `<span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color: \${assignedTribe.color}"></span>` : ''}
+                            ${tribeDropdown}
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 text-xs text-slate-300">
+                        <button onclick="openWhatsApp('${camper.phone}', '${camper.fullName}')" class="hover:text-white transition-all flex items-center gap-1.5 font-mono cursor-pointer bg-emerald-950/40 border border-emerald-500/30 text-emerald-400 px-2.5 py-1 rounded-xl hover:bg-emerald-900/50">
+                            <i class="fa-brands fa-whatsapp text-sm text-emerald-400"></i> ${camper.phone}
+                        </button>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="text-xs font-bold text-white">${camper.age} años</div>
+                        <div class="text-[10px] text-slate-400 uppercase truncate max-w-[120px]">${camper.church}</div>
+                    </td>
+                    <td class="py-3 px-4">
+                        <div class="space-y-1">
+                            <div class="flex justify-between items-center text-[10px]">
+                                <span class="font-semibold text-slate-300">$${paid.toLocaleString()} / $${cost.toLocaleString()}</span>
+                                <span class="font-bold text-white">${pct}%</span>
+                            </div>
+                            <div class="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden p-0.5 border border-white/10">
+                                <div class="bg-white h-full rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 text-center">
+                        <div class="flex items-center justify-center gap-1.5">
+                            <button onclick="openPassModal(${realIndex})" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Ver / Enviar Pase QR">
+                                <i class="fa-solid fa-qrcode text-xs"></i>
+                            </button>
+                            <button onclick="openPaymentModal(${realIndex})" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Abonar">
+                                <i class="fa-solid fa-dollar-sign text-xs"></i>
+                            </button>
+                            <button onclick="editCamper(${realIndex})" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Editar">
+                                <i class="fa-solid fa-pen-to-square text-xs"></i>
+                            </button>
+                            <button onclick="deleteCamper(${realIndex})" class="p-2 rounded-xl bg-rose-950/30 hover:bg-rose-900/40 text-rose-300 border border-rose-800/30 transition-all" title="Eliminar">
+                                <i class="fa-solid fa-trash-can text-xs"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function toggleAttendance(index) {
+            const camper = campers[index];
+            if (!camper) return;
+
+            camper.attended = !camper.attended;
+            if (camper.attended) {
+                const now = new Date();
+                camper.checkInTime = `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}`;
+                showToast(`Asistencia confirmada: ${camper.fullName}`, 'success');
+            } else {
+                camper.checkInTime = null;
+                showToast(`Asistencia desmarcada: ${camper.fullName}`, 'info');
+            }
+
+            saveToStorage();
+            renderDashboard();
+            initOrUpdateCharts();
+            renderTable();
+        }
+
+        function getFilteredCampers() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            const church = document.getElementById('filterChurch').value;
+            const tribeId = document.getElementById('filterTribe').value;
+            const status = document.getElementById('filterStatus').value;
+            const attFilter = document.getElementById('filterAttendance').value;
+
+            return campers.filter(camper => {
+                const matchQuery = !query || 
+                    camper.fullName.toLowerCase().includes(query) ||
+                    camper.id.toLowerCase().includes(query) ||
+                    camper.phone.includes(query) ||
+                    camper.church.toLowerCase().includes(query);
+
+                const matchChurch = !church || camper.church === church;
+                const matchTribe = !tribeId || camper.tribeId === tribeId;
+
+                const paid = parseFloat(camper.paidAmount) || 0;
+                const cost = parseFloat(camper.totalCost) || 0;
+                let camperStatus = 'Pendiente';
+                if (paid >= cost && cost > 0) camperStatus = 'Completo';
+                else if (paid > 0) camperStatus = 'Anticipo';
+
+                const matchStatus = !status || camperStatus === status;
+
+                let matchAtt = true;
+                if (attFilter === 'present') matchAtt = camper.attended === true;
+                if (attFilter === 'absent') matchAtt = !camper.attended;
+
+                return matchQuery && matchChurch && matchTribe && matchStatus && matchAtt;
+            });
+        }
+
+        function applyFilters() {
+            renderTable();
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterChurch').value = '';
+            document.getElementById('filterTribe').value = '';
+            document.getElementById('filterStatus').value = '';
+            document.getElementById('filterAttendance').value = '';
+            renderTable();
+        }
+
+        // QR SCANNER LOGIC
+        function openScannerModal() {
+            document.getElementById('scannerModal').classList.remove('hidden');
+            if (!html5QrScanner) {
+                html5QrScanner = new Html5Qrcode("reader");
+            }
+            const config = { fps: 10, qrbox: { width: 220, height: 220 } };
+            html5QrScanner.start({ facingMode: "environment" }, config, onScanSuccess)
+            .catch(err => { console.warn("Camera access error:", err); });
+        }
+
+        function closeScannerModal() {
+            if (html5QrScanner) {
+                html5QrScanner.stop().then(() => {
+                    document.getElementById('scannerModal').classList.add('hidden');
+                }).catch(() => {
+                    document.getElementById('scannerModal').classList.add('hidden');
+                });
+            } else {
+                document.getElementById('scannerModal').classList.add('hidden');
+            }
+        }
+
+        function onScanSuccess(decodedText) {
+            processCheckIn(decodedText.trim());
+        }
+
+        function manualCheckIn(e) {
+            e.preventDefault();
+            const idVal = document.getElementById('manualScanId').value.trim().toUpperCase();
+            if (idVal) {
+                processCheckIn(idVal);
+                document.getElementById('manualScanId').value = '';
+            }
+        }
+
+        function processCheckIn(scannedCode) {
+            const index = campers.findIndex(c => c.id.toUpperCase() === scannedCode.toUpperCase() || c.phone.replace(/\D/g,'') === scannedCode.replace(/\D/g,''));
+
+            if (index >= 0) {
+                const camper = campers[index];
+                if (!camper.attended) {
+                    camper.attended = true;
+                    const now = new Date();
+                    camper.checkInTime = `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}`;
+                    saveToStorage();
+                    renderDashboard();
+                    initOrUpdateCharts();
+                    renderTable();
+                    showToast(`¡Check-in Exitoso! Bienvenido(a) ${camper.fullName}`, 'success');
+                } else {
+                    showToast(`El campista ${camper.fullName} ya había registrado entrada.`, 'info');
+                }
+                closeScannerModal();
+            } else {
+                showToast(`No se encontró registro con el Folio: ${scannedCode}`, 'error');
+            }
+        }
+
+        // PASS MODAL & QR
+        function openPassModal(index) {
+            const camper = campers[index];
+            if (!camper) return;
+
+            activePassCamper = camper;
+
+            document.getElementById('passId').textContent = camper.id;
+            document.getElementById('passName').textContent = camper.fullName.toUpperCase();
+            document.getElementById('passPhone').textContent = camper.phone;
+            document.getElementById('passEmergency').textContent = camper.emergencyContact.toUpperCase();
+
+            const qrcodeContainer = document.getElementById('qrcodeCanvas');
+            qrcodeContainer.innerHTML = '';
+            new QRCode(qrcodeContainer, {
+                text: camper.id,
+                width: 130,
+                height: 130,
+                colorDark : "#0f1420",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+
+            document.getElementById('passModal').classList.remove('hidden');
+        }
+
+        function closePassModal() {
+            document.getElementById('passModal').classList.add('hidden');
+            activePassCamper = null;
+        }
+
+        // ENVÍO DEL PASE DIGITAL QR POR WHATSAPP
+        function sendPassToWhatsApp() {
+            if (!activePassCamper) return;
+
+            const cleanPhone = activePassCamper.phone.replace(/\D/g, '');
+            if (!cleanPhone) {
+                showToast('Número de teléfono inválido o no disponible', 'error');
+                return;
+            }
+
+            const assignedTribe = tribes.find(t => t.id === activePassCamper.tribeId);
+            const tribeText = assignedTribe ? assignedTribe.name : 'Por definir';
+
+            const messageText = 
+`🎪 *PASE DIGITAL - CAMPAMENTO BETHEL 2026* 🎪
+
+¡Hola *${activePassCamper.fullName}*! Confirmamos tu registro oficial para el campamento.
+
+📋 *Detalles de tu Pase:*
+• *Folio ID:* ${activePassCamper.id}
+• *Tribu Asignada:* ${tribeText}
+• *Teléfono:* ${activePassCamper.phone}
+• *Contacto Emergencia:* ${activePassCamper.emergencyContact}
+
+📌 *Instrucciones:* Presenta este Folio (*${activePassCamper.id}*) al ingresar al campamento para tu escaneo de entrada rápida.
+
+¡Te esperamos con bendición! Comunidad Cristiana Bethel.`;
+
+            const waUrl = `https://api.whatsapp.com/send?phone=52${cleanPhone}&text=${encodeURIComponent(messageText)}`;
+            window.open(waUrl, '_blank');
+        }
+
+        function downloadPassAsImage() {
+            const passElem = document.getElementById('printablePass');
+            showToast('Generando imagen...', 'info');
+
+            html2canvas(passElem, {
+                backgroundColor: '#0f1420',
+                scale: 2
+            }).then(canvas => {
+                const link = document.createElement('a');
+                const name = document.getElementById('passName').textContent.replace(/\s+/g, '_');
+                const id = document.getElementById('passId').textContent;
+                link.download = `Pase_Bethel_${id}_${name}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+                showToast('¡Pase guardado en tus descargas!', 'success');
+            }).catch(err => {
+                console.error(err);
+                showToast('Error al generar imagen', 'error');
+            });
+        }
+
+        // DISCOUNT RULE LOGIC
+        function toggleRuleState() {
+            const active = document.getElementById('ruleActiveToggle').checked;
+            const fields = document.getElementById('ruleConfigFields');
+            if (active) {
+                fields.classList.remove('opacity-50', 'pointer-events-none');
+            } else {
+                fields.classList.add('opacity-50', 'pointer-events-none');
+            }
+        }
+
+        function openDiscountsModal() {
+            document.getElementById('discountsModal').classList.remove('hidden');
+        }
+
+        function closeDiscountsModal() {
+            document.getElementById('discountsModal').classList.add('hidden');
+        }
+
+        function saveDiscountSettings() {
+            discountRule = {
+                active: document.getElementById('ruleActiveToggle').checked,
+                endDate: document.getElementById('ruleEndDate').value,
+                discountPrice: parseFloat(document.getElementById('ruleDiscountPrice').value) || 1200,
+                regularPrice: parseFloat(document.getElementById('ruleRegularPrice').value) || 1500
+            };
+            localStorage.setItem(RULES_KEY, JSON.stringify(discountRule));
+            closeDiscountsModal();
+            showToast('Regla de descuentos guardada', 'success');
+        }
+
+        function checkAutomaticDiscountRule() {
+            if (!discountRule.active) return;
+
+            const regDate = document.getElementById('regPaymentDate').value;
+            const costInput = document.getElementById('regTotalCost');
+            const tag = document.getElementById('discountAppliedTag');
+
+            if (regDate && regDate <= discountRule.endDate) {
+                costInput.value = discountRule.discountPrice;
+                tag.classList.remove('hidden');
+            } else {
+                costInput.value = discountRule.regularPrice;
+                tag.classList.add('hidden');
+            }
+            calculateBalance();
+        }
+
+        // REGISTER / EDIT MODAL
+        function openRegisterModal(index = -1) {
+            populateTribeFilters();
+            const modal = document.getElementById('camperModal');
+            const form = document.getElementById('camperForm');
+            form.reset();
+
+            if (index >= 0 && campers[index]) {
+                const camper = campers[index];
+                document.getElementById('modalTitle').textContent = 'Editar Campista';
+                document.getElementById('camperIndex').value = index;
+                document.getElementById('regId').value = camper.id;
+                document.getElementById('regFullName').value = camper.fullName;
+                document.getElementById('regPhone').value = camper.phone;
+                document.getElementById('regAge').value = camper.age;
+                document.getElementById('regTribe').value = camper.tribeId || '';
+                document.getElementById('regChurch').value = camper.church;
+                document.getElementById('regEmergencyContact').value = camper.emergencyContact;
+                document.getElementById('regTotalCost').value = camper.totalCost || 1500;
+                document.getElementById('regPaidAmount').value = camper.paidAmount || 0;
+                document.getElementById('regPaymentMethod').value = camper.paymentMethod || 'Efectivo';
+                document.getElementById('regPaymentDate').value = camper.paymentDate || new Date().toISOString().split('T')[0];
+                document.getElementById('regMedicalNotes').value = camper.medicalNotes || '';
+            } else {
+                document.getElementById('modalTitle').textContent = 'Nuevo Registro de Campista';
+                document.getElementById('camperIndex').value = -1;
+                document.getElementById('regId').value = generateUniqueId();
+                document.getElementById('regTribe').value = '';
+                document.getElementById('regTotalCost').value = discountRule.active ? discountRule.discountPrice : 1500;
+                document.getElementById('regPaidAmount').value = 500;
+                document.getElementById('regPaymentDate').value = new Date().toISOString().split('T')[0];
+                checkAutomaticDiscountRule();
+            }
+
+            calculateBalance();
+            modal.classList.remove('hidden');
+        }
+
+        function closeRegisterModal() {
+            document.getElementById('camperModal').classList.add('hidden');
+        }
+
+        function saveCamper(e) {
+            e.preventDefault();
+            const index = parseInt(document.getElementById('camperIndex').value);
+            const ageVal = parseInt(document.getElementById('regAge').value);
+
+            const camperObj = {
+                id: document.getElementById('regId').value,
+                fullName: document.getElementById('regFullName').value.trim().toUpperCase(),
+                phone: document.getElementById('regPhone').value.trim(),
+                age: ageVal,
+                tribeId: document.getElementById('regTribe').value,
+                church: document.getElementById('regChurch').value.trim().toUpperCase(),
+                emergencyContact: document.getElementById('regEmergencyContact').value.trim().toUpperCase(),
+                totalCost: parseFloat(document.getElementById('regTotalCost').value) || 0,
+                paidAmount: parseFloat(document.getElementById('regPaidAmount').value) || 0,
+                paymentMethod: document.getElementById('regPaymentMethod').value,
+                paymentDate: document.getElementById('regPaymentDate').value,
+                medicalNotes: document.getElementById('regMedicalNotes').value.trim() || 'Ninguna',
+                attended: index >= 0 ? (campers[index].attended || false) : false,
+                checkInTime: index >= 0 ? (campers[index].checkInTime || null) : null
+            };
+
+            if (index >= 0) {
+                campers[index] = camperObj;
+                showToast('Campista actualizado correctamente', 'success');
+            } else {
+                campers.unshift(camperObj);
+                showToast('¡Campista registrado con éxito!', 'success');
+            }
+
+            saveToStorage();
+            populateChurchFilter();
+            renderDashboard();
+            initOrUpdateCharts();
+            renderTable();
+            closeRegisterModal();
+        }
+
+        function editCamper(index) {
+            openRegisterModal(index);
+        }
+
+        function deleteCamper(index) {
+            if (confirm(`¿Estás seguro de eliminar a ${campers[index].fullName}?`)) {
+                campers.splice(index, 1);
+                saveToStorage();
+                populateChurchFilter();
+                renderDashboard();
+                initOrUpdateCharts();
+                renderTable();
+                showToast('Registro eliminado', 'info');
+            }
+        }
+
+        // QUICK PAYMENT
+        function openPaymentModal(index) {
+            const camper = campers[index];
+            if (!camper) return;
+
+            document.getElementById('payCamperIndex').value = index;
+            document.getElementById('payCamperName').textContent = camper.fullName;
+            
+            const cost = parseFloat(camper.totalCost) || 0;
+            const paid = parseFloat(camper.paidAmount) || 0;
+            const pending = Math.max(0, cost - paid);
+
+            document.getElementById('payCurrentPaid').textContent = `$${paid.toFixed(2)}`;
+            document.getElementById('payCurrentPending').textContent = `$${pending.toFixed(2)}`;
+            document.getElementById('payAddAmount').value = pending > 0 ? pending : '';
+
+            document.getElementById('paymentModal').classList.remove('hidden');
+        }
+
+        function closePaymentModal() {
+            document.getElementById('paymentModal').classList.add('hidden');
+        }
+
+        function submitAddPayment() {
+            const index = parseInt(document.getElementById('payCamperIndex').value);
+            const addVal = parseFloat(document.getElementById('payAddAmount').value);
+            const method = document.getElementById('payAddMethod').value;
+
+            if (isNaN(addVal) || addVal <= 0) {
+                showToast('Ingresa un monto válido', 'error');
+                return;
+            }
+
+            const camper = campers[index];
+            camper.paidAmount = (parseFloat(camper.paidAmount) || 0) + addVal;
+            camper.paymentMethod = method;
+            camper.paymentDate = new Date().toISOString().split('T')[0];
+
+            saveToStorage();
+            renderDashboard();
+            initOrUpdateCharts();
+            renderTable();
+            closePaymentModal();
+            showToast(`Abono de $${addVal} registrado a ${camper.fullName}`, 'success');
+        }
+
+        // EXPORT TO EXCEL
+        function exportToExcel() {
+            if (campers.length === 0) {
+                showToast('No hay datos para exportar', 'error');
+                return;
+            }
+
+            const exportData = campers.map(c => {
+                const paid = parseFloat(c.paidAmount) || 0;
+                const cost = parseFloat(c.totalCost) || 0;
+                const pending = Math.max(0, cost - paid);
+                const assignedTribe = tribes.find(t => t.id === c.tribeId);
+
+                return {
+                    'Folio ID': c.id,
+                    'Asistencia': c.attended ? 'SI' : 'NO',
+                    'Hora Check-In': c.checkInTime || 'N/A',
+                    'Nombre Completo': c.fullName,
+                    'Tribu': assignedTribe ? assignedTribe.name : 'Sin Asignar',
+                    'Teléfono / WhatsApp': c.phone,
+                    'Edad': c.age,
+                    'Iglesia / Congregación': c.church,
+                    'Contacto Emergencia': c.emergencyContact,
+                    'Costo Total (\$)': cost,
+                    'Monto Abonado (\$)': paid,
+                    'Saldo Pendiente (\$)': pending,
+                    'Estado de Pago': paid >= cost ? 'COMPLETO' : (paid > 0 ? 'PARCIAL' : 'PENDIENTE'),
+                    'Método de Pago': c.paymentMethod,
+                    'Fecha Registro': c.paymentDate,
+                    'Notas Médicas': c.medicalNotes
+                };
+            });
+
+            const worksheet = XLSX.utils.json_to_sheet(exportData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Campistas Bethel");
+
+            const max_cols = Object.keys(exportData[0]).map(key => ({
+                wch: Math.max(key.length + 3, 15)
+            }));
+            worksheet['!cols'] = max_cols;
+
+            const dateStr = new Date().toISOString().split('T')[0];
+            XLSX.writeFile(workbook, `Reporte_Bethel_Campamento_${dateStr}.xlsx`);
+            showToast('¡Archivo Excel generado correctamente!', 'success');
+        }
+
+        // IMPORT FROM EXCEL
+        function importFromExcel(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheetName = workbook.SheetNames[0];
+                    const worksheet = workbook.Sheets[firstSheetName];
+                    const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+                    if (!jsonData || jsonData.length === 0) {
+                        showToast('El archivo no contiene datos válidos', 'error');
+                        return;
+                    }
+
+                    let importedCount = 0;
+                    jsonData.forEach(row => {
+                        const id = row['Folio ID'] || row['id'] || generateUniqueId();
+                        const fullName = row['Nombre Completo'] || row['fullName'] || row['Nombre'];
+                        if (!fullName) return;
+
+                        const ageVal = parseInt(row['Edad'] || row['age'] || 18);
+                        const tribeNameRow = row['Tribu'] || row['tribe'] || '';
+                        let matchedTribeId = '';
+                        if (tribeNameRow) {
+                            const foundTribe = tribes.find(t => t.name.toLowerCase() === String(tribeNameRow).toLowerCase());
+                            if (foundTribe) matchedTribeId = foundTribe.id;
+                        }
+
+                        const camper = {
+                            id: String(id),
+                            fullName: String(fullName).toUpperCase(),
+                            phone: String(row['Teléfono / WhatsApp'] || row['phone'] || ''),
+                            age: ageVal,
+                            tribeId: matchedTribeId,
+                            church: String(row['Iglesia / Congregación'] || row['church'] || 'BETHEL').toUpperCase(),
+                            emergencyContact: String(row['Contacto Emergencia'] || row['emergencyContact'] || 'N/A').toUpperCase(),
+                            totalCost: parseFloat(row['Costo Total (\$)'] || row['totalCost'] || 1500),
+                            paidAmount: parseFloat(row['Monto Abonado (\$)'] || row['paidAmount'] || 0),
+                            paymentMethod: String(row['Método de Pago'] || row['paymentMethod'] || 'Efectivo'),
+                            paymentDate: row['Fecha Registro'] || row['paymentDate'] || new Date().toISOString().split('T')[0],
+                            medicalNotes: String(row['Notas Médicas'] || row['medicalNotes'] || 'Ninguna'),
+                            attended: (row['Asistencia'] === 'SI' || row['attended'] === true),
+                            checkInTime: row['Hora Check-In'] || null
+                        };
+
+                        const existingIdx = campers.findIndex(c => c.id === camper.id);
+                        if (existingIdx >= 0) {
+                            campers[existingIdx] = camper;
+                        } else {
+                            campers.push(camper);
+                        }
+                        importedCount++;
+                    });
+
+                    saveToStorage();
+                    populateChurchFilter();
+                    populateTribeFilters();
+                    renderDashboard();
+                    initOrUpdateCharts();
+                    renderTable();
+                    showToast(`Se importaron ${importedCount} registros con éxito`, 'success');
+
+                } catch (err) {
+                    console.error(err);
+                    showToast('Error al leer el archivo Excel', 'error');
+                }
+            };
+            reader.readAsArrayBuffer(file);
+            event.target.value = '';
+        }
+
+        // TOAST NOTIFICATIONS
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-slate-900 text-white border-white/20';
+            let icon = 'fa-circle-info text-slate-300';
+
+            if (type === 'success') {
+                bgClass = 'bg-slate-900 text-white border-white/40';
+                icon = 'fa-circle-check text-white';
+            } else if (type === 'error') {
+                bgClass = 'bg-rose-950 text-rose-200 border-rose-800/60';
+                icon = 'fa-circle-exclamation text-rose-400';
+            }
+
+            toast.className = `glass-panel ${bgClass} border p-3.5 rounded-2xl shadow-2xl text-xs flex items-center gap-3 transition-all transform translate-y-2 opacity-0 max-w-sm`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i> <span>${message}</span>`;
+
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 50);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-x-4');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>

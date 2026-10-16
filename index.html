@@ -121,18 +121,14 @@
 </head>
 <body class="min-h-screen text-slate-100 bg-[#090a0f] flex flex-col justify-between selection:bg-white selection:text-black">
 
-    <!-- Ambient Glow Effects -->
     <div class="fixed top-0 left-1/3 w-[500px] h-[500px] bg-white/5 rounded-full blur-[160px] pointer-events-none -z-10"></div>
     <div class="fixed bottom-10 right-10 w-96 h-96 bg-slate-500/10 rounded-full blur-[140px] pointer-events-none -z-10"></div>
 
-    <!-- MAIN CONTAINER -->
     <div class="max-w-7xl w-full mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-6 sm:space-y-8">
 
-        <!-- HEADER / BRANDING BANNER -->
         <header class="relative glass-panel rounded-2xl sm:rounded-3xl p-5 sm:p-8 overflow-hidden border border-white/10 shadow-2xl">
             <div class="flex flex-col lg:flex-row items-center justify-between gap-6 relative z-10">
                 
-                <!-- Logo & Title -->
                 <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
                     <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-full bg-white text-black flex items-center justify-center p-2 shadow-2xl shrink-0 ring-4 ring-white/10">
                         <svg viewBox="0 0 100 100" class="w-full h-full fill-current">
@@ -145,6 +141,7 @@
                     <div class="space-y-1">
                         <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-slate-300 text-[10px] sm:text-[11px] font-semibold tracking-widest uppercase">
                             <i class="fa-solid fa-fire text-white animate-pulse"></i> Campamento Cristiano 2026
+                            <span id="syncStatus" class="ml-2 text-[9px] text-emerald-400 font-normal">● En tiempo real</span>
                         </div>
                         <h1 class="text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-tight text-white uppercase font-heading">
                             COMUNIDAD CRISTIANA BETHEL
@@ -155,7 +152,6 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons (Mobile-optimized Grid) -->
                 <div class="grid grid-cols-2 sm:flex sm:flex-wrap items-center justify-center gap-2 w-full lg:w-auto">
                     <button onclick="openScannerModal()" class="col-span-2 sm:col-span-1 bg-white hover:bg-slate-200 text-slate-950 font-bold px-4 py-3 sm:py-2.5 rounded-xl shadow-xl transition-all flex items-center justify-center gap-2 text-xs sm:text-sm active:scale-95 border border-white">
                         <i class="fa-solid fa-qrcode text-base"></i>
@@ -191,9 +187,7 @@
             </div>
         </header>
 
-        <!-- DASHBOARD METRIC CARDS -->
         <section class="grid grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
-            <!-- Card 1: Total -->
             <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
                 <div class="flex justify-between items-start">
                     <div>
@@ -209,7 +203,6 @@
                 </div>
             </div>
 
-            <!-- Card 2: Asistencia -->
             <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
                 <div class="flex justify-between items-start">
                     <div>
@@ -225,7 +218,6 @@
                 </div>
             </div>
 
-            <!-- Card 3: Recaudado -->
             <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
                 <div class="flex justify-between items-start">
                     <div>
@@ -241,7 +233,6 @@
                 </div>
             </div>
 
-            <!-- Card 4: Efectivo vs Transf -->
             <div class="glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
                 <div class="flex justify-between items-start">
                     <div>
@@ -262,7 +253,6 @@
                 </div>
             </div>
 
-            <!-- Card 5: Pagos Completos -->
             <div class="col-span-2 lg:col-span-1 glass-card rounded-2xl p-3.5 sm:p-4 border border-white/10 relative overflow-hidden group">
                 <div class="flex justify-between items-start">
                     <div>
@@ -281,9 +271,7 @@
             </div>
         </section>
 
-        <!-- CHARTS SECTION -->
         <section class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            <!-- Chart 1: Donut -->
             <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between">
                 <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
                     <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
@@ -296,7 +284,6 @@
                 </div>
             </div>
 
-            <!-- Chart 2: Status -->
             <div class="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col justify-between">
                 <div class="flex items-center justify-between mb-4 border-b border-white/10 pb-3">
                     <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-2">
@@ -310,7 +297,6 @@
             </div>
         </section>
 
-        <!-- FILTERS BAR -->
         <section class="glass-panel rounded-2xl p-4 sm:p-5 border border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="relative w-full md:w-80">
                 <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
@@ -346,7 +332,6 @@
             </div>
         </section>
 
-        <!-- MAIN TABLE SECTION -->
         <section class="glass-panel rounded-2xl border border-white/10 overflow-hidden shadow-2xl">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse min-w-[850px]">
@@ -363,18 +348,16 @@
                         </tr>
                     </thead>
                     <tbody id="campersTableBody" class="divide-y divide-white/5 text-xs">
-                        <!-- Dynamic Rows -->
                     </tbody>
                 </table>
             </div>
 
-            <!-- Empty State -->
             <div id="emptyState" class="hidden flex-col items-center justify-center p-12 text-center">
                 <div class="w-14 h-14 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 mb-3">
                     <i class="fa-solid fa-users-slash text-xl"></i>
                 </div>
                 <h4 class="text-sm font-bold text-slate-300">No se encontraron registros</h4>
-                <p class="text-xs text-slate-500 max-w-sm mt-1">No hay campistas que coincidan con la búsqueda o la lista está vacía.</p>
+                <p class="text-xs text-slate-500 max-w-sm mt-1">No hay campistas registrados aún.</p>
                 <button onclick="openRegisterModal()" class="mt-4 text-xs bg-white text-black font-bold px-4 py-2 rounded-xl transition-all hover:bg-slate-200">
                     Registrar Primer Campista
                 </button>
@@ -383,7 +366,7 @@
 
     </div>
 
-    <!-- MODAL: GESTIÓN COMPLETA DE TRIBUS -->
+    <!-- MODAL TRIBUS -->
     <div id="tribesModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
         <div class="glass-panel w-full max-w-2xl rounded-3xl border border-white/15 shadow-2xl p-5 sm:p-6 relative space-y-5 my-6 max-h-[90vh] flex flex-col justify-between">
             <div>
@@ -401,7 +384,6 @@
                     </div>
                 </div>
 
-                <!-- Formulario Agregar / Editar Tribu -->
                 <form onsubmit="saveTribe(event)" class="mt-4 p-4 bg-slate-900/90 rounded-2xl border border-white/10 space-y-3">
                     <input type="hidden" id="tribeEditId" value="">
                     <h4 class="text-xs font-bold text-white uppercase tracking-wider flex items-center gap-2">
@@ -436,12 +418,9 @@
                     </div>
                 </form>
 
-                <!-- Lista de Tribus Existentes -->
                 <div class="mt-4 space-y-2 overflow-y-auto max-h-[300px] pr-1">
                     <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider">Tribus Registradas</h4>
-                    <div id="tribesList" class="space-y-2">
-                        <!-- Dynamic Tribes List -->
-                    </div>
+                    <div id="tribesList" class="space-y-2"></div>
                 </div>
             </div>
 
@@ -453,7 +432,7 @@
         </div>
     </div>
 
-    <!-- MODAL: ESCÁNER QR DE ASISTENCIA -->
+    <!-- MODAL ESCÁNER -->
     <div id="scannerModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="glass-panel w-full max-w-lg rounded-3xl border border-white/15 shadow-2xl p-6 relative space-y-4">
             <button onclick="closeScannerModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white transition-colors">
@@ -486,16 +465,14 @@
         </div>
     </div>
 
-    <!-- MODAL: PASE DIGITAL IMPRIMIBLE Y ENVÍO A WHATSAPP -->
+    <!-- MODAL PASE -->
     <div id="passModal" class="fixed inset-0 bg-slate-950/85 backdrop-blur-md z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
         <div class="glass-panel w-full max-w-md rounded-3xl border border-white/15 shadow-2xl p-5 sm:p-6 relative space-y-4 my-6">
             <button onclick="closePassModal()" class="no-print absolute right-4 top-4 text-slate-400 hover:text-white z-20">
                 <i class="fa-solid fa-xmark text-lg"></i>
             </button>
 
-            <!-- TICKET PASE DIGITAL SIMPLIFICADO -->
             <div id="printablePass" class="bg-[#0f1420] text-slate-100 p-6 rounded-2xl space-y-4 border border-slate-700/80 shadow-2xl">
-                
                 <div class="flex justify-between items-center gap-2">
                     <div class="flex items-center gap-3">
                         <div class="w-10 h-10 rounded-full bg-white text-black p-1 flex items-center justify-center shrink-0">
@@ -543,7 +520,6 @@
                 </div>
             </div>
 
-            <!-- BOTONES DE ACCIÓN PARA WHATSAPP / IMPRESIÓN -->
             <div class="no-print pt-2 flex flex-col gap-2">
                 <button id="btnSendWaPass" onclick="sendPassToWhatsApp()" class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-lg transition-all flex items-center justify-center gap-2 text-sm">
                     <i class="fa-brands fa-whatsapp text-lg"></i> Enviar Pase Directo por WhatsApp
@@ -562,10 +538,9 @@
         </div>
     </div>
 
-    <!-- MODAL: REGISTRO / EDICIÓN -->
+    <!-- MODAL REGISTRO -->
     <div id="camperModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
         <div class="glass-panel w-full max-w-2xl rounded-3xl border border-white/15 shadow-2xl overflow-hidden my-6 transform transition-all">
-            
             <div class="bg-slate-900 px-6 py-4 border-b border-white/10 flex justify-between items-center">
                 <div class="flex items-center gap-3">
                     <div class="w-9 h-9 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center text-white">
@@ -582,7 +557,7 @@
             </div>
 
             <form id="camperForm" onsubmit="saveCamper(event)" class="p-5 sm:p-6 space-y-4 text-xs">
-                <input type="hidden" id="camperIndex" value="-1">
+                <input type="hidden" id="camperKey" value="">
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
@@ -680,7 +655,7 @@
         </div>
     </div>
 
-    <!-- MODAL: REGLAS DE DESCUENTO -->
+    <!-- MODAL DESCUENTOS -->
     <div id="discountsModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4 overflow-y-auto">
         <div class="glass-panel w-full max-w-xl rounded-3xl border border-white/15 shadow-2xl p-6 space-y-5 relative">
             <button onclick="closeDiscountsModal()" class="absolute right-4 top-4 text-slate-400 hover:text-white">
@@ -738,7 +713,7 @@
         </div>
     </div>
 
-    <!-- MODAL: ABONO RÁPIDO -->
+    <!-- MODAL ABONO -->
     <div id="paymentModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
         <div class="glass-panel w-full max-w-md rounded-3xl border border-white/15 shadow-2xl p-6 space-y-4">
             <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -748,7 +723,7 @@
                 <button onclick="closePaymentModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <input type="hidden" id="payCamperIndex">
+            <input type="hidden" id="payCamperKey">
             
             <div class="space-y-3 text-xs">
                 <div class="p-3 rounded-xl bg-slate-900 border border-white/10 space-y-1">
@@ -780,66 +755,40 @@
         </div>
     </div>
 
-    <!-- FOOTER INSTITUCIONAL -->
     <footer class="mt-12 text-center text-xs text-slate-500 py-6 border-t border-white/5">
         <p>© 2026 Comunidad Cristiana Bethel • Sistema Institucional de Control de Asistencia y Gestión de Campamentos</p>
     </footer>
 
-    <!-- TOAST CONTAINER -->
     <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2"></div>
 
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        const STORAGE_KEY = 'CAMP_BETHEL_2026_REGISTERS_V6';
-        const RULES_KEY = 'CAMP_BETHEL_DISCOUNT_RULES_2026';
-        const TRIBES_KEY = 'CAMP_BETHEL_TRIBES_2026';
+    <!-- CONEXIÓN REALTIME CON FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, onValue, set, push, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-        // Demo Data con Folios en formato CAMP-01, CAMP-02
-        const initialDemoData = [
-            {
-                id: 'CAMP-01',
-                fullName: 'BRENDA RAMIREZ',
-                phone: '56 64 02 93 33',
-                age: 18,
-                tribeId: 'tribe-1',
-                church: 'BETHEL CUAUTLA',
-                emergencyContact: 'PAPÁ - 735 190 2859',
-                totalCost: 600,
-                paidAmount: 200,
-                paymentMethod: 'Efectivo',
-                paymentDate: '2026-10-15',
-                medicalNotes: 'Ninguna',
-                attended: false,
-                checkInTime: null
-            },
-            {
-                id: 'CAMP-02',
-                fullName: 'MATEO GONZÁLEZ LÓPEZ',
-                phone: '55 87 65 43 21',
-                age: 14,
-                tribeId: 'tribe-2',
-                church: 'IGLESIA FILADELFIA',
-                emergencyContact: 'MAMÁ - 55 1122 3344',
-                totalCost: 1500,
-                paidAmount: 1500,
-                paymentMethod: 'Transferencia',
-                paymentDate: '2026-10-10',
-                medicalNotes: 'Ninguna',
-                attended: true,
-                checkInTime: '2026-10-15 08:30:12'
-            }
-        ];
+        // CONFIGURACIÓN DE TU PROYECTO DE FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyApKcqNwh1-vfI4gYiguGnAhfI2CdDtX1Q",
+            authDomain: "registro-campamento.firebaseapp.com",
+            databaseURL: "https://registro-campamento-default-rtdb.firebaseio.com",
+            projectId: "registro-campamento",
+            storageBucket: "registro-campamento.firebasestorage.app",
+            messagingSenderId: "470138872240",
+            appId: "1:470138872240:web:b313b771bca9950c8bf675",
+            measurementId: "G-H2GED027H8"
+        };
 
-        let initialTribes = [
-            { id: 'tribe-1', name: 'Judá', color: '#3b82f6', ageRange: '15-18 años' },
-            { id: 'tribe-2', name: 'Leones', color: '#f59e0b', ageRange: '12-14 años' }
-        ];
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
 
-        let campers = [];
-        let tribes = [];
-        let activePassCamper = null;
+        const campersRef = ref(db, 'campers');
+        const tribesRef = ref(db, 'tribes');
+        const discountRef = ref(db, 'discountRule');
 
-        let discountRule = {
+        window.campers = [];
+        window.tribes = [];
+        window.activePassCamper = null;
+        window.discountRule = {
             active: false,
             endDate: '2026-05-31',
             discountPrice: 1200,
@@ -850,76 +799,106 @@
         let chartStatusInstance = null;
         let html5QrScanner = null;
 
-        // INITIALIZATION
-        window.addEventListener('DOMContentLoaded', () => {
-            loadTribesFromStorage();
-            loadCampersFromStorage();
-            loadDiscountRules();
+        // Escuchar Campistas en tiempo real
+        onValue(campersRef, (snapshot) => {
+            const data = snapshot.val();
+            window.campers = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    window.campers.push({ _key: key, ...data[key] });
+                });
+            }
             populateChurchFilter();
-            populateTribeFilters();
             renderDashboard();
             initOrUpdateCharts();
             renderTable();
-            
-            document.getElementById('regPaymentDate').value = new Date().toISOString().split('T')[0];
-            document.getElementById('tribeColor').addEventListener('input', (e) => {
-                document.getElementById('tribeColorHex').textContent = e.target.value;
-            });
         });
 
-        function loadTribesFromStorage() {
-            const stored = localStorage.getItem(TRIBES_KEY);
-            if (stored) {
-                try { tribes = JSON.parse(stored); } catch(e) { tribes = [...initialTribes]; }
+        // Escuchar Tribus en tiempo real
+        onValue(tribesRef, (snapshot) => {
+            const data = snapshot.val();
+            window.tribes = [];
+            if (data) {
+                Object.keys(data).forEach(key => {
+                    window.tribes.push({ _key: key, ...data[key] });
+                });
             } else {
-                tribes = [...initialTribes];
-                saveTribesToStorage();
+                const defaultTribes = [
+                    { id: 'tribe-1', name: 'Judá', color: '#3b82f6', ageRange: '15-18 años' },
+                    { id: 'tribe-2', name: 'Leones', color: '#f59e0b', ageRange: '12-14 años' }
+                ];
+                defaultTribes.forEach(t => push(tribesRef, t));
             }
-        }
+            populateTribeFilters();
+            renderTribesList();
+            renderTable();
+        });
 
-        function saveTribesToStorage() {
-            localStorage.setItem(TRIBES_KEY, JSON.stringify(tribes));
-        }
+        // Escuchar Descuentos en tiempo real
+        onValue(discountRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                window.discountRule = data;
+                document.getElementById('ruleActiveToggle').checked = data.active;
+                document.getElementById('ruleEndDate').value = data.endDate;
+                document.getElementById('ruleDiscountPrice').value = data.discountPrice;
+                document.getElementById('ruleRegularPrice').value = data.regularPrice;
+                toggleRuleState();
+            }
+        });
 
-        function loadCampersFromStorage() {
-            const stored = localStorage.getItem(STORAGE_KEY);
-            if (stored) {
-                try { campers = JSON.parse(stored); } catch(e) { campers = [...initialDemoData]; }
+        window.saveCamperToFirebase = function(camperObj, key = null) {
+            if (key) {
+                update(ref(db, `campers/${key}`), camperObj);
+                showToast('Campista actualizado en tiempo real', 'success');
             } else {
-                campers = [...initialDemoData];
-                saveToStorage();
+                push(campersRef, camperObj);
+                showToast('¡Campista guardado al instante!', 'success');
             }
-        }
+        };
 
-        function saveToStorage() {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(campers));
-        }
+        window.deleteCamperFromFirebase = function(key) {
+            remove(ref(db, `campers/${key}`));
+            showToast('Registro eliminado', 'info');
+        };
 
-        function loadDiscountRules() {
-            const stored = localStorage.getItem(RULES_KEY);
-            if (stored) {
-                try { discountRule = JSON.parse(stored); } catch(e) {}
+        window.saveTribeToFirebase = function(tribeObj, key = null) {
+            if (key) {
+                update(ref(db, `tribes/${key}`), tribeObj);
+                showToast('Tribu actualizada', 'success');
+            } else {
+                push(tribesRef, tribeObj);
+                showToast('Tribu creada', 'success');
             }
-            document.getElementById('ruleActiveToggle').checked = discountRule.active;
-            document.getElementById('ruleEndDate').value = discountRule.endDate;
-            document.getElementById('ruleDiscountPrice').value = discountRule.discountPrice;
-            document.getElementById('ruleRegularPrice').value = discountRule.regularPrice;
-            toggleRuleState();
-        }
+        };
 
-        function calculateBalance() {
+        window.deleteTribeFromFirebase = function(key) {
+            remove(ref(db, `tribes/${key}`));
+            showToast('Tribu eliminada', 'info');
+        };
+
+        window.saveDiscountToFirebase = function(ruleObj) {
+            set(discountRef, ruleObj);
+            showToast('Regla de descuentos sincronizada', 'success');
+        };
+
+        document.getElementById('regPaymentDate').value = new Date().toISOString().split('T')[0];
+        document.getElementById('tribeColor').addEventListener('input', (e) => {
+            document.getElementById('tribeColorHex').textContent = e.target.value;
+        });
+
+        window.calculateBalance = function() {
             const total = parseFloat(document.getElementById('regTotalCost').value) || 0;
             const paid = parseFloat(document.getElementById('regPaidAmount').value) || 0;
             const pending = Math.max(0, total - paid);
             document.getElementById('regPendingAmount').value = `$${pending.toFixed(2)}`;
-        }
+        };
 
-        // GENERACIÓN DE FOLIO CONSECUTIVO DESDE EL 01 EN ADELANTE (CAMP-01, CAMP-02)
-        function generateUniqueId() {
+        window.generateUniqueId = function() {
             let nextNum = 1;
-            if (campers.length > 0) {
-                const nums = campers.map(c => {
-                    const match = c.id.match(/CAMP-(\d+)/i);
+            if (window.campers.length > 0) {
+                const nums = window.campers.map(c => {
+                    const match = c.id ? c.id.match(/CAMP-(\d+)/i) : null;
                     return match ? parseInt(match[1]) : 0;
                 });
                 const maxNum = Math.max(...nums, 0);
@@ -927,42 +906,39 @@
             }
             const padded = String(nextNum).padStart(2, '0');
             return `CAMP-${padded}`;
-        }
+        };
 
-        // REDIRECCIÓN DIRECTA A WHATSAPP
-        function openWhatsApp(phoneDigits, fullName) {
+        window.openWhatsApp = function(phoneDigits, fullName) {
             const cleanPhone = phoneDigits.replace(/\D/g, '');
             if (!cleanPhone) {
                 showToast('Número de teléfono no disponible', 'error');
                 return;
             }
             const message = encodeURIComponent(`Hola ${fullName}, te saludamos de Comunidad Cristiana Bethel referente a tu registro para el Campamento 2026.`);
-            const waUrl = `https://api.whatsapp.com/send?phone=52${cleanPhone}&text=${message}`;
-            window.open(waUrl, '_blank');
-        }
+            window.open(`https://api.whatsapp.com/send?phone=52${cleanPhone}&text=${message}`, '_blank');
+        };
 
-        // GESTIÓN DE TRIBUS
-        function openTribesModal() {
+        window.openTribesModal = function() {
             renderTribesList();
             document.getElementById('tribesModal').classList.remove('hidden');
-        }
+        };
 
-        function closeTribesModal() {
+        window.closeTribesModal = function() {
             document.getElementById('tribesModal').classList.add('hidden');
             cancelTribeEdit();
-        }
+        };
 
-        function renderTribesList() {
+        window.renderTribesList = function() {
             const container = document.getElementById('tribesList');
             container.innerHTML = '';
 
-            if (tribes.length === 0) {
+            if (window.tribes.length === 0) {
                 container.innerHTML = '<p class="text-xs text-slate-500 italic text-center py-4">No hay tribus creadas aún.</p>';
                 return;
             }
 
-            tribes.forEach((t) => {
-                const memberCount = campers.filter(c => c.tribeId === t.id).length;
+            window.tribes.forEach((t) => {
+                const memberCount = window.campers.filter(c => c.tribeId === t.id).length;
                 const div = document.createElement('div');
                 div.className = "flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-white/10 text-xs";
                 div.innerHTML = `
@@ -974,50 +950,35 @@
                         </div>
                     </div>
                     <div class="flex items-center gap-1">
-                        <button onclick="editTribe('${t.id}')" class="p-1.5 rounded-lg glass-card hover:bg-white/10 text-slate-300"><i class="fa-solid fa-pen"></i></button>
-                        <button onclick="deleteTribe('${t.id}')" class="p-1.5 rounded-lg bg-rose-950/30 text-rose-300 hover:bg-rose-900/40"><i class="fa-solid fa-trash"></i></button>
+                        <button onclick="editTribe('${t._key}')" class="p-1.5 rounded-lg glass-card hover:bg-white/10 text-slate-300"><i class="fa-solid fa-pen"></i></button>
+                        <button onclick="deleteTribe('${t._key}')" class="p-1.5 rounded-lg bg-rose-950/30 text-rose-300 hover:bg-rose-900/40"><i class="fa-solid fa-trash"></i></button>
                     </div>
                 `;
                 container.appendChild(div);
             });
-        }
+        };
 
-        function saveTribe(e) {
+        window.saveTribe = function(e) {
             e.preventDefault();
-            const editId = document.getElementById('tribeEditId').value;
+            const editKey = document.getElementById('tribeEditId').value;
             const name = document.getElementById('tribeName').value.trim();
             const color = document.getElementById('tribeColor').value;
             const ageRange = document.getElementById('tribeAgeRange').value.trim();
 
-            if (editId) {
-                const idx = tribes.findIndex(t => t.id === editId);
-                if (idx >= 0) {
-                    tribes[idx] = { id: editId, name, color, ageRange };
-                    showToast('Tribu actualizada', 'success');
-                }
-            } else {
-                const newTribe = {
-                    id: 'tribe-' + Date.now(),
-                    name,
-                    color,
-                    ageRange
-                };
-                tribes.push(newTribe);
-                showToast('Tribu creada con éxito', 'success');
-            }
+            const tribeObj = {
+                id: editKey ? (window.tribes.find(t => t._key === editKey)?.id || 'tribe-' + Date.now()) : 'tribe-' + Date.now(),
+                name, color, ageRange
+            };
 
-            saveTribesToStorage();
-            populateTribeFilters();
-            renderTribesList();
-            renderTable();
+            window.saveTribeToFirebase(tribeObj, editKey || null);
             cancelTribeEdit();
-        }
+        };
 
-        function editTribe(tribeId) {
-            const t = tribes.find(item => item.id === tribeId);
+        window.editTribe = function(key) {
+            const t = window.tribes.find(item => item._key === key);
             if (!t) return;
 
-            document.getElementById('tribeEditId').value = t.id;
+            document.getElementById('tribeEditId').value = t._key;
             document.getElementById('tribeName').value = t.name;
             document.getElementById('tribeColor').value = t.color;
             document.getElementById('tribeColorHex').textContent = t.color;
@@ -1025,9 +986,9 @@
 
             document.getElementById('tribeFormTitle').textContent = 'Editar Tribu';
             document.getElementById('btnCancelTribe').classList.remove('hidden');
-        }
+        };
 
-        function cancelTribeEdit() {
+        window.cancelTribeEdit = function() {
             document.getElementById('tribeEditId').value = '';
             document.getElementById('tribeName').value = '';
             document.getElementById('tribeColor').value = '#f59e0b';
@@ -1036,38 +997,27 @@
 
             document.getElementById('tribeFormTitle').textContent = 'Crear Nueva Tribu';
             document.getElementById('btnCancelTribe').classList.add('hidden');
-        }
+        };
 
-        function deleteTribe(tribeId) {
-            if (confirm('¿Eliminar esta tribu? Los campistas asignados quedarán "Sin Asignar".')) {
-                tribes = tribes.filter(t => t.id !== tribeId);
-                campers.forEach(c => {
-                    if (c.tribeId === tribeId) c.tribeId = '';
-                });
-                saveTribesToStorage();
-                saveToStorage();
-                populateTribeFilters();
-                renderTribesList();
-                renderTable();
-                showToast('Tribu eliminada', 'info');
+        window.deleteTribe = function(key) {
+            if (confirm('¿Eliminar esta tribu?')) {
+                window.deleteTribeFromFirebase(key);
             }
-        }
+        };
 
-        function assignTribeToCamper(camperIndex, tribeId) {
-            if (campers[camperIndex]) {
-                campers[camperIndex].tribeId = tribeId;
-                saveToStorage();
-                renderTable();
-                showToast(`Tribu actualizada para ${campers[camperIndex].fullName}`, 'success');
+        window.assignTribeToCamper = function(camperKey, tribeId) {
+            const camper = window.campers.find(c => c._key === camperKey);
+            if (camper) {
+                update(ref(db, `campers/${camperKey}`), { tribeId: tribeId });
+                showToast(`Tribu actualizada para ${camper.fullName}`, 'success');
             }
-        }
+        };
 
-        function populateTribeFilters() {
-            // Table Filter
+        window.populateTribeFilters = function() {
             const selectFilter = document.getElementById('filterTribe');
             const currentFilter = selectFilter.value;
             selectFilter.innerHTML = '<option value="">Todas las Tribus</option>';
-            tribes.forEach(t => {
+            window.tribes.forEach(t => {
                 const opt = document.createElement('option');
                 opt.value = t.id;
                 opt.textContent = t.name;
@@ -1075,38 +1025,36 @@
             });
             selectFilter.value = currentFilter;
 
-            // Form Select
             const selectForm = document.getElementById('regTribe');
             const currentFormVal = selectForm.value;
             selectForm.innerHTML = '<option value="">Sin Asignar</option>';
-            tribes.forEach(t => {
+            window.tribes.forEach(t => {
                 const opt = document.createElement('option');
                 opt.value = t.id;
                 opt.textContent = t.name;
                 selectForm.appendChild(opt);
             });
             selectForm.value = currentFormVal;
-        }
+        };
 
-        // DASHBOARD CALCULATIONS
-        function renderDashboard() {
-            const total = campers.length;
-            const totalRecaudado = campers.reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
-            const totalCosto = campers.reduce((sum, c) => sum + (parseFloat(c.totalCost) || 0), 0);
+        window.renderDashboard = function() {
+            const total = window.campers.length;
+            const totalRecaudado = window.campers.reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            const totalCosto = window.campers.reduce((sum, c) => sum + (parseFloat(c.totalCost) || 0), 0);
             const totalPendiente = Math.max(0, totalCosto - totalRecaudado);
 
-            const attendedCount = campers.filter(c => c.attended).length;
+            const attendedCount = window.campers.filter(c => c.attended).length;
             const pendingAttendanceCount = total - attendedCount;
 
-            const efectivoVal = campers.filter(c => c.paymentMethod === 'Efectivo').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
-            const transfVal = campers.filter(c => c.paymentMethod === 'Transferencia').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            const efectivoVal = window.campers.filter(c => c.paymentMethod === 'Efectivo').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            const transfVal = window.campers.filter(c => c.paymentMethod === 'Transferencia').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
 
-            const countEfec = campers.filter(c => c.paymentMethod === 'Efectivo').length;
-            const countTrans = campers.filter(c => c.paymentMethod === 'Transferencia').length;
+            const countEfec = window.campers.filter(c => c.paymentMethod === 'Efectivo').length;
+            const countTrans = window.campers.filter(c => c.paymentMethod === 'Transferencia').length;
 
             let completoCount = 0, parcialCount = 0, pendienteCount = 0;
 
-            campers.forEach(c => {
+            window.campers.forEach(c => {
                 const paid = parseFloat(c.paidAmount) || 0;
                 const cost = parseFloat(c.totalCost) || 0;
                 if (paid >= cost && cost > 0) completoCount++;
@@ -1136,19 +1084,18 @@
             document.getElementById('barCompleto').style.width = `${(completoCount / totalSafe) * 100}%`;
             document.getElementById('barParcial').style.width = `${(parcialCount / totalSafe) * 100}%`;
             document.getElementById('barPendiente').style.width = `${(pendienteCount / totalSafe) * 100}%`;
-        }
+        };
 
-        // CHARTS
-        function initOrUpdateCharts() {
-            const efectivoVal = campers.filter(c => c.paymentMethod === 'Efectivo').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
-            const transfVal = campers.filter(c => c.paymentMethod === 'Transferencia').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+        window.initOrUpdateCharts = function() {
+            const efectivoVal = window.campers.filter(c => c.paymentMethod === 'Efectivo').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
+            const transfVal = window.campers.filter(c => c.paymentMethod === 'Transferencia').reduce((sum, c) => sum + (parseFloat(c.paidAmount) || 0), 0);
             
-            const totalCosto = campers.reduce((sum, c) => sum + (parseFloat(c.totalCost) || 0), 0);
+            const totalCosto = window.campers.reduce((sum, c) => sum + (parseFloat(c.totalCost) || 0), 0);
             const totalRecaudado = efectivoVal + transfVal;
             const totalPendiente = Math.max(0, totalCosto - totalRecaudado);
 
             let completoCount = 0, parcialCount = 0, pendienteCount = 0;
-            campers.forEach(c => {
+            window.campers.forEach(c => {
                 const paid = parseFloat(c.paidAmount) || 0;
                 const cost = parseFloat(c.totalCost) || 0;
                 if (paid >= cost && cost > 0) completoCount++;
@@ -1156,7 +1103,6 @@
                 else pendienteCount++;
             });
 
-            // Donut Chart
             const ctx1 = document.getElementById('paymentMethodsChart').getContext('2d');
             if (chartMethodsInstance) {
                 chartMethodsInstance.data.datasets[0].data = [efectivoVal, transfVal, totalPendiente];
@@ -1177,15 +1123,12 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
-                        plugins: {
-                            legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { family: 'Inter', size: 10 } } }
-                        },
+                        plugins: { legend: { position: 'bottom', labels: { color: '#cbd5e1', font: { family: 'Inter', size: 10 } } } },
                         cutout: '68%'
                     }
                 });
             }
 
-            // Status Chart
             const ctx2 = document.getElementById('paymentStatusChart').getContext('2d');
             if (chartStatusInstance) {
                 chartStatusInstance.data.datasets[0].data = [completoCount, parcialCount, pendienteCount];
@@ -1214,12 +1157,12 @@
                     }
                 });
             }
-        }
+        };
 
-        function populateChurchFilter() {
+        window.populateChurchFilter = function() {
             const select = document.getElementById('filterChurch');
             const current = select.value;
-            const churches = [...new Set(campers.map(c => c.church.trim()).filter(Boolean))].sort();
+            const churches = [...new Set(window.campers.map(c => (c.church || '').trim()).filter(Boolean))].sort();
 
             select.innerHTML = '<option value="">Todas las Iglesias</option>';
             churches.forEach(ch => {
@@ -1229,10 +1172,9 @@
                 select.appendChild(opt);
             });
             select.value = current;
-        }
+        };
 
-        // RENDER TABLE
-        function renderTable(dataToRender = null) {
+        window.renderTable = function(dataToRender = null) {
             const tbody = document.getElementById('campersTableBody');
             const emptyState = document.getElementById('emptyState');
             tbody.innerHTML = '';
@@ -1249,27 +1191,25 @@
             }
 
             list.forEach((camper) => {
-                const realIndex = campers.findIndex(c => c.id === camper.id);
                 const paid = parseFloat(camper.paidAmount) || 0;
                 const cost = parseFloat(camper.totalCost) || 0;
                 const pct = cost > 0 ? Math.min(100, Math.round((paid / cost) * 100)) : 0;
 
-                const assignedTribe = tribes.find(t => t.id === camper.tribeId);
+                const assignedTribe = window.tribes.find(t => t.id === camper.tribeId);
                 
-                // Selector rápido de tribu en tabla
-                let tribeDropdown = `<select onchange="assignTribeToCamper(${realIndex}, this.value)" class="glass-input rounded-lg px-2 py-1 text-[11px] bg-slate-900 border-white/10 text-white font-medium cursor-pointer">
+                let tribeDropdown = `<select onchange="assignTribeToCamper('${camper._key}', this.value)" class="glass-input rounded-lg px-2 py-1 text-[11px] bg-slate-900 border-white/10 text-white font-medium cursor-pointer">
                     <option value="">+ Asignar</option>`;
-                tribes.forEach(t => {
+                window.tribes.forEach(t => {
                     const sel = t.id === camper.tribeId ? 'selected' : '';
                     tribeDropdown += `<option value="${t.id}" ${sel}>${t.name}</option>`;
                 });
                 tribeDropdown += `</select>`;
 
                 const attendanceToggle = camper.attended ? 
-                    `<button onclick="toggleAttendance(${realIndex})" class="px-2.5 py-1 rounded-xl bg-white/10 text-white border border-white/30 text-[10px] font-bold flex items-center gap-1 hover:bg-white/20 transition-all">
+                    `<button onclick="toggleAttendance('${camper._key}')" class="px-2.5 py-1 rounded-xl bg-white/10 text-white border border-white/30 text-[10px] font-bold flex items-center gap-1 hover:bg-white/20 transition-all">
                         <i class="fa-solid fa-square-check text-sm text-emerald-400"></i> PRESENTES
                     </button>` :
-                    `<button onclick="toggleAttendance(${realIndex})" class="px-2.5 py-1 rounded-xl bg-slate-900 text-slate-400 border border-slate-800 text-[10px] font-medium flex items-center gap-1 hover:bg-white/10 hover:text-white transition-all">
+                    `<button onclick="toggleAttendance('${camper._key}')" class="px-2.5 py-1 rounded-xl bg-slate-900 text-slate-400 border border-slate-800 text-[10px] font-medium flex items-center gap-1 hover:bg-white/10 hover:text-white transition-all">
                         <i class="fa-regular fa-square text-sm"></i> PENDIENTE
                     </button>`;
 
@@ -1314,16 +1254,16 @@
                     </td>
                     <td class="py-3 px-4 text-center">
                         <div class="flex items-center justify-center gap-1.5">
-                            <button onclick="openPassModal(${realIndex})" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Ver / Enviar Pase QR">
+                            <button onclick="openPassModal('${camper._key}')" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Ver / Enviar Pase QR">
                                 <i class="fa-solid fa-qrcode text-xs"></i>
                             </button>
-                            <button onclick="openPaymentModal(${realIndex})" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Abonar">
+                            <button onclick="openPaymentModal('${camper._key}')" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Abonar">
                                 <i class="fa-solid fa-dollar-sign text-xs"></i>
                             </button>
-                            <button onclick="editCamper(${realIndex})" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Editar">
+                            <button onclick="editCamper('${camper._key}')" class="p-2 rounded-xl bg-white/5 hover:bg-white/15 text-slate-200 border border-white/10 transition-all" title="Editar">
                                 <i class="fa-solid fa-pen-to-square text-xs"></i>
                             </button>
-                            <button onclick="deleteCamper(${realIndex})" class="p-2 rounded-xl bg-rose-950/30 hover:bg-rose-900/40 text-rose-300 border border-rose-800/30 transition-all" title="Eliminar">
+                            <button onclick="deleteCamper('${camper._key}')" class="p-2 rounded-xl bg-rose-950/30 hover:bg-rose-900/40 text-rose-300 border border-rose-800/30 transition-all" title="Eliminar">
                                 <i class="fa-solid fa-trash-can text-xs"></i>
                             </button>
                         </div>
@@ -1331,41 +1271,39 @@
                 `;
                 tbody.appendChild(tr);
             });
-        }
+        };
 
-        function toggleAttendance(index) {
-            const camper = campers[index];
+        window.toggleAttendance = function(key) {
+            const camper = window.campers.find(c => c._key === key);
             if (!camper) return;
 
-            camper.attended = !camper.attended;
-            if (camper.attended) {
+            const newAttended = !camper.attended;
+            let newCheckIn = null;
+
+            if (newAttended) {
                 const now = new Date();
-                camper.checkInTime = `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}`;
-                showToast(`Asistencia confirmada: ${camper.fullName}`, 'success');
-            } else {
-                camper.checkInTime = null;
-                showToast(`Asistencia desmarcada: ${camper.fullName}`, 'info');
+                newCheckIn = `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}`;
             }
 
-            saveToStorage();
-            renderDashboard();
-            initOrUpdateCharts();
-            renderTable();
-        }
+            update(ref(db, `campers/${key}`), {
+                attended: newAttended,
+                checkInTime: newCheckIn
+            });
+        };
 
-        function getFilteredCampers() {
+        window.getFilteredCampers = function() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const church = document.getElementById('filterChurch').value;
             const tribeId = document.getElementById('filterTribe').value;
             const status = document.getElementById('filterStatus').value;
             const attFilter = document.getElementById('filterAttendance').value;
 
-            return campers.filter(camper => {
+            return window.campers.filter(camper => {
                 const matchQuery = !query || 
-                    camper.fullName.toLowerCase().includes(query) ||
-                    camper.id.toLowerCase().includes(query) ||
-                    camper.phone.includes(query) ||
-                    camper.church.toLowerCase().includes(query);
+                    (camper.fullName && camper.fullName.toLowerCase().includes(query)) ||
+                    (camper.id && camper.id.toLowerCase().includes(query)) ||
+                    (camper.phone && camper.phone.includes(query)) ||
+                    (camper.church && camper.church.toLowerCase().includes(query));
 
                 const matchChurch = !church || camper.church === church;
                 const matchTribe = !tribeId || camper.tribeId === tribeId;
@@ -1384,23 +1322,20 @@
 
                 return matchQuery && matchChurch && matchTribe && matchStatus && matchAtt;
             });
-        }
+        };
 
-        function applyFilters() {
-            renderTable();
-        }
+        window.applyFilters = function() { renderTable(); };
 
-        function resetFilters() {
+        window.resetFilters = function() {
             document.getElementById('searchInput').value = '';
             document.getElementById('filterChurch').value = '';
             document.getElementById('filterTribe').value = '';
             document.getElementById('filterStatus').value = '';
             document.getElementById('filterAttendance').value = '';
             renderTable();
-        }
+        };
 
-        // QR SCANNER LOGIC
-        function openScannerModal() {
+        window.openScannerModal = function() {
             document.getElementById('scannerModal').classList.remove('hidden');
             if (!html5QrScanner) {
                 html5QrScanner = new Html5Qrcode("reader");
@@ -1408,9 +1343,9 @@
             const config = { fps: 10, qrbox: { width: 220, height: 220 } };
             html5QrScanner.start({ facingMode: "environment" }, config, onScanSuccess)
             .catch(err => { console.warn("Camera access error:", err); });
-        }
+        };
 
-        function closeScannerModal() {
+        window.closeScannerModal = function() {
             if (html5QrScanner) {
                 html5QrScanner.stop().then(() => {
                     document.getElementById('scannerModal').classList.add('hidden');
@@ -1420,34 +1355,32 @@
             } else {
                 document.getElementById('scannerModal').classList.add('hidden');
             }
-        }
+        };
 
         function onScanSuccess(decodedText) {
             processCheckIn(decodedText.trim());
         }
 
-        function manualCheckIn(e) {
+        window.manualCheckIn = function(e) {
             e.preventDefault();
             const idVal = document.getElementById('manualScanId').value.trim().toUpperCase();
             if (idVal) {
                 processCheckIn(idVal);
                 document.getElementById('manualScanId').value = '';
             }
-        }
+        };
 
         function processCheckIn(scannedCode) {
-            const index = campers.findIndex(c => c.id.toUpperCase() === scannedCode.toUpperCase() || c.phone.replace(/\D/g,'') === scannedCode.replace(/\D/g,''));
+            const camper = window.campers.find(c => c.id.toUpperCase() === scannedCode.toUpperCase() || c.phone.replace(/\D/g,'') === scannedCode.replace(/\D/g,''));
 
-            if (index >= 0) {
-                const camper = campers[index];
+            if (camper) {
                 if (!camper.attended) {
-                    camper.attended = true;
                     const now = new Date();
-                    camper.checkInTime = `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}`;
-                    saveToStorage();
-                    renderDashboard();
-                    initOrUpdateCharts();
-                    renderTable();
+                    const checkInTime = `${now.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}`;
+                    update(ref(db, `campers/${camper._key}`), {
+                        attended: true,
+                        checkInTime: checkInTime
+                    });
                     showToast(`¡Check-in Exitoso! Bienvenido(a) ${camper.fullName}`, 'success');
                 } else {
                     showToast(`El campista ${camper.fullName} ya había registrado entrada.`, 'info');
@@ -1458,12 +1391,11 @@
             }
         }
 
-        // PASS MODAL & QR
-        function openPassModal(index) {
-            const camper = campers[index];
+        window.openPassModal = function(key) {
+            const camper = window.campers.find(c => c._key === key);
             if (!camper) return;
 
-            activePassCamper = camper;
+            window.activePassCamper = camper;
 
             document.getElementById('passId').textContent = camper.id;
             document.getElementById('passName').textContent = camper.fullName.toUpperCase();
@@ -1482,46 +1414,44 @@
             });
 
             document.getElementById('passModal').classList.remove('hidden');
-        }
+        };
 
-        function closePassModal() {
+        window.closePassModal = function() {
             document.getElementById('passModal').classList.add('hidden');
-            activePassCamper = null;
-        }
+            window.activePassCamper = null;
+        };
 
-        // ENVÍO DEL PASE DIGITAL QR POR WHATSAPP
-        function sendPassToWhatsApp() {
-            if (!activePassCamper) return;
+        window.sendPassToWhatsApp = function() {
+            if (!window.activePassCamper) return;
 
-            const cleanPhone = activePassCamper.phone.replace(/\D/g, '');
+            const cleanPhone = window.activePassCamper.phone.replace(/\D/g, '');
             if (!cleanPhone) {
                 showToast('Número de teléfono inválido o no disponible', 'error');
                 return;
             }
 
-            const assignedTribe = tribes.find(t => t.id === activePassCamper.tribeId);
+            const assignedTribe = window.tribes.find(t => t.id === window.activePassCamper.tribeId);
             const tribeText = assignedTribe ? assignedTribe.name : 'Por definir';
 
             const messageText = 
 `🎪 *PASE DIGITAL - CAMPAMENTO BETHEL 2026* 🎪
 
-¡Hola *${activePassCamper.fullName}*! Confirmamos tu registro oficial para el campamento.
+¡Hola *${window.activePassCamper.fullName}*! Confirmamos tu registro oficial para el campamento.
 
 📋 *Detalles de tu Pase:*
-• *Folio ID:* ${activePassCamper.id}
+• *Folio ID:* ${window.activePassCamper.id}
 • *Tribu Asignada:* ${tribeText}
-• *Teléfono:* ${activePassCamper.phone}
-• *Contacto Emergencia:* ${activePassCamper.emergencyContact}
+• *Teléfono:* ${window.activePassCamper.phone}
+• *Contacto Emergencia:* ${window.activePassCamper.emergencyContact}
 
-📌 *Instrucciones:* Presenta este Folio (*${activePassCamper.id}*) al ingresar al campamento para tu escaneo de entrada rápida.
+📌 *Instrucciones:* Presenta este Folio (*${window.activePassCamper.id}*) al ingresar al campamento para tu escaneo de entrada rápida.
 
 ¡Te esperamos con bendición! Comunidad Cristiana Bethel.`;
 
-            const waUrl = `https://api.whatsapp.com/send?phone=52${cleanPhone}&text=${encodeURIComponent(messageText)}`;
-            window.open(waUrl, '_blank');
-        }
+            window.open(`https://api.whatsapp.com/send?phone=52${cleanPhone}&text=${encodeURIComponent(messageText)}`, '_blank');
+        };
 
-        function downloadPassAsImage() {
+        window.downloadPassAsImage = function() {
             const passElem = document.getElementById('printablePass');
             showToast('Generando imagen...', 'info');
 
@@ -1540,10 +1470,9 @@
                 console.error(err);
                 showToast('Error al generar imagen', 'error');
             });
-        }
+        };
 
-        // DISCOUNT RULE LOGIC
-        function toggleRuleState() {
+        window.toggleRuleState = function() {
             const active = document.getElementById('ruleActiveToggle').checked;
             const fields = document.getElementById('ruleConfigFields');
             if (active) {
@@ -1551,56 +1480,49 @@
             } else {
                 fields.classList.add('opacity-50', 'pointer-events-none');
             }
-        }
+        };
 
-        function openDiscountsModal() {
-            document.getElementById('discountsModal').classList.remove('hidden');
-        }
+        window.openDiscountsModal = function() { document.getElementById('discountsModal').classList.remove('hidden'); };
+        window.closeDiscountsModal = function() { document.getElementById('discountsModal').classList.add('hidden'); };
 
-        function closeDiscountsModal() {
-            document.getElementById('discountsModal').classList.add('hidden');
-        }
-
-        function saveDiscountSettings() {
-            discountRule = {
+        window.saveDiscountSettings = function() {
+            const ruleObj = {
                 active: document.getElementById('ruleActiveToggle').checked,
                 endDate: document.getElementById('ruleEndDate').value,
                 discountPrice: parseFloat(document.getElementById('ruleDiscountPrice').value) || 1200,
                 regularPrice: parseFloat(document.getElementById('ruleRegularPrice').value) || 1500
             };
-            localStorage.setItem(RULES_KEY, JSON.stringify(discountRule));
+            window.saveDiscountToFirebase(ruleObj);
             closeDiscountsModal();
-            showToast('Regla de descuentos guardada', 'success');
-        }
+        };
 
-        function checkAutomaticDiscountRule() {
-            if (!discountRule.active) return;
+        window.checkAutomaticDiscountRule = function() {
+            if (!window.discountRule.active) return;
 
             const regDate = document.getElementById('regPaymentDate').value;
             const costInput = document.getElementById('regTotalCost');
             const tag = document.getElementById('discountAppliedTag');
 
-            if (regDate && regDate <= discountRule.endDate) {
-                costInput.value = discountRule.discountPrice;
+            if (regDate && regDate <= window.discountRule.endDate) {
+                costInput.value = window.discountRule.discountPrice;
                 tag.classList.remove('hidden');
             } else {
-                costInput.value = discountRule.regularPrice;
+                costInput.value = window.discountRule.regularPrice;
                 tag.classList.add('hidden');
             }
             calculateBalance();
-        }
+        };
 
-        // REGISTER / EDIT MODAL
-        function openRegisterModal(index = -1) {
+        window.openRegisterModal = function(key = null) {
             populateTribeFilters();
             const modal = document.getElementById('camperModal');
             const form = document.getElementById('camperForm');
             form.reset();
 
-            if (index >= 0 && campers[index]) {
-                const camper = campers[index];
+            if (key) {
+                const camper = window.campers.find(c => c._key === key);
                 document.getElementById('modalTitle').textContent = 'Editar Campista';
-                document.getElementById('camperIndex').value = index;
+                document.getElementById('camperKey').value = camper._key;
                 document.getElementById('regId').value = camper.id;
                 document.getElementById('regFullName').value = camper.fullName;
                 document.getElementById('regPhone').value = camper.phone;
@@ -1615,10 +1537,10 @@
                 document.getElementById('regMedicalNotes').value = camper.medicalNotes || '';
             } else {
                 document.getElementById('modalTitle').textContent = 'Nuevo Registro de Campista';
-                document.getElementById('camperIndex').value = -1;
+                document.getElementById('camperKey').value = '';
                 document.getElementById('regId').value = generateUniqueId();
                 document.getElementById('regTribe').value = '';
-                document.getElementById('regTotalCost').value = discountRule.active ? discountRule.discountPrice : 1500;
+                document.getElementById('regTotalCost').value = window.discountRule.active ? window.discountRule.discountPrice : 1500;
                 document.getElementById('regPaidAmount').value = 500;
                 document.getElementById('regPaymentDate').value = new Date().toISOString().split('T')[0];
                 checkAutomaticDiscountRule();
@@ -1626,15 +1548,13 @@
 
             calculateBalance();
             modal.classList.remove('hidden');
-        }
+        };
 
-        function closeRegisterModal() {
-            document.getElementById('camperModal').classList.add('hidden');
-        }
+        window.closeRegisterModal = function() { document.getElementById('camperModal').classList.add('hidden'); };
 
-        function saveCamper(e) {
+        window.saveCamper = function(e) {
             e.preventDefault();
-            const index = parseInt(document.getElementById('camperIndex').value);
+            const key = document.getElementById('camperKey').value;
             const ageVal = parseInt(document.getElementById('regAge').value);
 
             const camperObj = {
@@ -1650,48 +1570,28 @@
                 paymentMethod: document.getElementById('regPaymentMethod').value,
                 paymentDate: document.getElementById('regPaymentDate').value,
                 medicalNotes: document.getElementById('regMedicalNotes').value.trim() || 'Ninguna',
-                attended: index >= 0 ? (campers[index].attended || false) : false,
-                checkInTime: index >= 0 ? (campers[index].checkInTime || null) : null
+                attended: key ? (window.campers.find(c => c._key === key)?.attended || false) : false,
+                checkInTime: key ? (window.campers.find(c => c._key === key)?.checkInTime || null) : null
             };
 
-            if (index >= 0) {
-                campers[index] = camperObj;
-                showToast('Campista actualizado correctamente', 'success');
-            } else {
-                campers.unshift(camperObj);
-                showToast('¡Campista registrado con éxito!', 'success');
-            }
-
-            saveToStorage();
-            populateChurchFilter();
-            renderDashboard();
-            initOrUpdateCharts();
-            renderTable();
+            window.saveCamperToFirebase(camperObj, key || null);
             closeRegisterModal();
-        }
+        };
 
-        function editCamper(index) {
-            openRegisterModal(index);
-        }
+        window.editCamper = function(key) { openRegisterModal(key); };
 
-        function deleteCamper(index) {
-            if (confirm(`¿Estás seguro de eliminar a ${campers[index].fullName}?`)) {
-                campers.splice(index, 1);
-                saveToStorage();
-                populateChurchFilter();
-                renderDashboard();
-                initOrUpdateCharts();
-                renderTable();
-                showToast('Registro eliminado', 'info');
+        window.deleteCamper = function(key) {
+            const camper = window.campers.find(c => c._key === key);
+            if (camper && confirm(`¿Estás seguro de eliminar a ${camper.fullName}?`)) {
+                window.deleteCamperFromFirebase(key);
             }
-        }
+        };
 
-        // QUICK PAYMENT
-        function openPaymentModal(index) {
-            const camper = campers[index];
+        window.openPaymentModal = function(key) {
+            const camper = window.campers.find(c => c._key === key);
             if (!camper) return;
 
-            document.getElementById('payCamperIndex').value = index;
+            document.getElementById('payCamperKey').value = camper._key;
             document.getElementById('payCamperName').textContent = camper.fullName;
             
             const cost = parseFloat(camper.totalCost) || 0;
@@ -1703,14 +1603,12 @@
             document.getElementById('payAddAmount').value = pending > 0 ? pending : '';
 
             document.getElementById('paymentModal').classList.remove('hidden');
-        }
+        };
 
-        function closePaymentModal() {
-            document.getElementById('paymentModal').classList.add('hidden');
-        }
+        window.closePaymentModal = function() { document.getElementById('paymentModal').classList.add('hidden'); };
 
-        function submitAddPayment() {
-            const index = parseInt(document.getElementById('payCamperIndex').value);
+        window.submitAddPayment = function() {
+            const key = document.getElementById('payCamperKey').value;
             const addVal = parseFloat(document.getElementById('payAddAmount').value);
             const method = document.getElementById('payAddMethod').value;
 
@@ -1719,31 +1617,30 @@
                 return;
             }
 
-            const camper = campers[index];
-            camper.paidAmount = (parseFloat(camper.paidAmount) || 0) + addVal;
-            camper.paymentMethod = method;
-            camper.paymentDate = new Date().toISOString().split('T')[0];
+            const camper = window.campers.find(c => c._key === key);
+            const newPaid = (parseFloat(camper.paidAmount) || 0) + addVal;
 
-            saveToStorage();
-            renderDashboard();
-            initOrUpdateCharts();
-            renderTable();
+            update(ref(db, `campers/${key}`), {
+                paidAmount: newPaid,
+                paymentMethod: method,
+                paymentDate: new Date().toISOString().split('T')[0]
+            });
+
             closePaymentModal();
             showToast(`Abono de $${addVal} registrado a ${camper.fullName}`, 'success');
-        }
+        };
 
-        // EXPORT TO EXCEL
-        function exportToExcel() {
-            if (campers.length === 0) {
+        window.exportToExcel = function() {
+            if (window.campers.length === 0) {
                 showToast('No hay datos para exportar', 'error');
                 return;
             }
 
-            const exportData = campers.map(c => {
+            const exportData = window.campers.map(c => {
                 const paid = parseFloat(c.paidAmount) || 0;
                 const cost = parseFloat(c.totalCost) || 0;
                 const pending = Math.max(0, cost - paid);
-                const assignedTribe = tribes.find(t => t.id === c.tribeId);
+                const assignedTribe = window.tribes.find(t => t.id === c.tribeId);
 
                 return {
                     'Folio ID': c.id,
@@ -1777,10 +1674,9 @@
             const dateStr = new Date().toISOString().split('T')[0];
             XLSX.writeFile(workbook, `Reporte_Bethel_Campamento_${dateStr}.xlsx`);
             showToast('¡Archivo Excel generado correctamente!', 'success');
-        }
+        };
 
-        // IMPORT FROM EXCEL
-        function importFromExcel(event) {
+        window.importFromExcel = function(event) {
             const file = event.target.files[0];
             if (!file) return;
 
@@ -1808,11 +1704,11 @@
                         const tribeNameRow = row['Tribu'] || row['tribe'] || '';
                         let matchedTribeId = '';
                         if (tribeNameRow) {
-                            const foundTribe = tribes.find(t => t.name.toLowerCase() === String(tribeNameRow).toLowerCase());
+                            const foundTribe = window.tribes.find(t => t.name.toLowerCase() === String(tribeNameRow).toLowerCase());
                             if (foundTribe) matchedTribeId = foundTribe.id;
                         }
 
-                        const camper = {
+                        const camperObj = {
                             id: String(id),
                             fullName: String(fullName).toUpperCase(),
                             phone: String(row['Teléfono / WhatsApp'] || row['phone'] || ''),
@@ -1829,21 +1725,10 @@
                             checkInTime: row['Hora Check-In'] || null
                         };
 
-                        const existingIdx = campers.findIndex(c => c.id === camper.id);
-                        if (existingIdx >= 0) {
-                            campers[existingIdx] = camper;
-                        } else {
-                            campers.push(camper);
-                        }
+                        push(campersRef, camperObj);
                         importedCount++;
                     });
 
-                    saveToStorage();
-                    populateChurchFilter();
-                    populateTribeFilters();
-                    renderDashboard();
-                    initOrUpdateCharts();
-                    renderTable();
                     showToast(`Se importaron ${importedCount} registros con éxito`, 'success');
 
                 } catch (err) {
@@ -1853,10 +1738,9 @@
             };
             reader.readAsArrayBuffer(file);
             event.target.value = '';
-        }
+        };
 
-        // TOAST NOTIFICATIONS
-        function showToast(message, type = 'info') {
+        window.showToast = function(message, type = 'info') {
             const container = document.getElementById('toastContainer');
             const toast = document.createElement('div');
             
@@ -1876,15 +1760,13 @@
 
             container.appendChild(toast);
 
-            setTimeout(() => {
-                toast.classList.remove('translate-y-2', 'opacity-0');
-            }, 50);
+            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 50);
 
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'translate-x-4');
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
-        }
+        };
     </script>
 </body>
 </html>
